@@ -15,6 +15,7 @@ C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanage
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\ListReservationsByClientCommand.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\dao\ClientDao.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\dao\ReservationDao.java
+C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ClientCreateServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\ListReservationsCommand.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\ListReservationsByVehicleCommand.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\DeleteReservationCommand.java
