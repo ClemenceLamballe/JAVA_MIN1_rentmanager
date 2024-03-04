@@ -16,6 +16,7 @@ com\epf\rentmanager\service\ServiceException.class
 com\epf\rentmanager\ui\cli\DeleteVehicleCommand.class
 com\epf\rentmanager\ui\cli\DeleteReservationCommand.class
 com\epf\rentmanager\ui\cli\ListReservationsByClientCommand.class
+com\epf\rentmanager\servlet\ReservationListServlet.class
 com\epf\rentmanager\ui\cli\DeleteClientCommand.class
 com\epf\rentmanager\service\ReservationService.class
 com\epf\rentmanager\utils\IOUtils.class

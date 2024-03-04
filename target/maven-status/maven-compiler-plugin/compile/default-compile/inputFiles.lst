@@ -5,6 +5,7 @@ C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanage
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\CreateReservationCommand.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleCreateServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\dao\VehicleDao.java
+C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ClientListServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\persistence\FillDatabase.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\dao\DaoException.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\service\ClientService.java
@@ -21,6 +22,7 @@ C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanage
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\HomeServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\service\ReservationService.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\DeleteClientCommand.java
+C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ReservationListServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\utils\IOUtils.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\persistence\ConnectionManager.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\CreateClientCommand.java
