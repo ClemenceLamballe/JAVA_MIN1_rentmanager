@@ -63,5 +63,10 @@ public class ClientService {
 		// TODO: récupérer tous les clients
 		return clientDao.findAll();
 	}
-	
+
+	public int count() throws ServiceException, DaoException {
+		return clientDao.countClients();
+	}
+
+
 }

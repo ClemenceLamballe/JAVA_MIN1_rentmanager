@@ -50,4 +50,8 @@ public class ReservationService {
     public List<Reservation> findReservationsByVehicleId(long vehicleId) throws ServiceException, DaoException {
         return reservationDao.findResaByVehicleId(vehicleId);
     }
+
+    public int count() throws ServiceException, DaoException {
+        return reservationDao.countReservation();
+    }
 }

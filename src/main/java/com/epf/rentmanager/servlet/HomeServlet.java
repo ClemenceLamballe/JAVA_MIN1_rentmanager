@@ -7,9 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.epf.rentmanager.service.*;
 
-import com.epf.rentmanager.service.ServiceException;
-import com.epf.rentmanager.service.VehicleService;
 import com.epf.rentmanager.dao.DaoException;
 
 @WebServlet("/home")
@@ -27,6 +26,14 @@ public class HomeServlet extends HttpServlet {
 			VehicleService vehicleService = VehicleService.getInstance();
 			int numberOfVehicles = vehicleService.count();
 			request.setAttribute("numberOfVehicles", numberOfVehicles);
+
+			ClientService clientService = ClientService.getInstance();
+			int numberOfClients = clientService.count();
+			request.setAttribute("numberOfClients", numberOfClients);
+
+			ReservationService reservationService = ReservationService.getInstance();
+			int numberOfReservations = reservationService.count();
+			request.setAttribute("numberOfReservations", numberOfReservations);
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/home.jsp");
 			dispatcher.forward(request, response);
