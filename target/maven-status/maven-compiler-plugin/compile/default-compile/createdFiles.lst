@@ -7,6 +7,7 @@ com\epf\rentmanager\ui\cli\Interface.class
 com\epf\rentmanager\ui\cli\ListVehicleCommand.class
 com\epf\rentmanager\dao\ReservationDao.class
 com\epf\rentmanager\servlet\VehicleCreateServlet.class
+com\epf\rentmanager\servlet\ClientListServlet.class
 com\epf\rentmanager\model\Vehicle.class
 com\epf\rentmanager\servlet\HomeServlet.class
 com\epf\rentmanager\dao\ClientDao.class
