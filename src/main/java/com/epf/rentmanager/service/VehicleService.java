@@ -68,5 +68,9 @@ public class VehicleService {
 
         return vehicleDao.findAll();
     }
+
+	public int count() throws ServiceException, DaoException {
+		return vehicleDao.count();
+	}
 	
 }

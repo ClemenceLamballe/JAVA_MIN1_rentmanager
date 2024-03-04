@@ -134,4 +134,21 @@ public class  ClientDao {
 
 		return clients;
 	}
+
+	public int countClients() throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM client");
+			 ResultSet resultSet = statement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			throw new DaoException();
+		}
+
+		return -1;
+	}
+
 }
