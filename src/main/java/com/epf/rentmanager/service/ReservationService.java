@@ -2,22 +2,18 @@ package com.epf.rentmanager.service;
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.dao.ReservationDao;
 import com.epf.rentmanager.model.Reservation;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
+@Service
 public class ReservationService {
     private ReservationDao reservationDao;
     public static ReservationService instance;
 
-    private ReservationService() {
-        this.reservationDao = ReservationDao.getInstance();
+    private ReservationService(ReservationDao reservationDao){
+        this.reservationDao = reservationDao;
     }
 
-    public static ReservationService getInstance() {
-        if (instance == null) {
-            instance = new ReservationService();
-        }
-
-        return instance;
-    }
 
     public long create(Reservation reservation) throws ServiceException, DaoException {
 

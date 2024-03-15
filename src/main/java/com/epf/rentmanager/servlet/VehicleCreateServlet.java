@@ -13,6 +13,8 @@ import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ServiceException;
 import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 
 @WebServlet("/vehicles/create")
@@ -20,7 +22,13 @@ import com.epf.rentmanager.service.VehicleService;
 
 public class VehicleCreateServlet extends HttpServlet {
     //private static final long serialVersionUID = 1L;
-
+    @Autowired
+    VehicleService vehicleService;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Affichage du formulaire
@@ -40,7 +48,7 @@ public class VehicleCreateServlet extends HttpServlet {
             Vehicle newVehicle = new Vehicle(-1, constructeur, modele, nbPlaces);
 
             // Appel à la méthode create du service
-            VehicleService vehicleService = VehicleService.getInstance();
+            //VehicleService vehicleService = VehicleService.getInstance();
             long generatedId = vehicleService.create(newVehicle);
 
             // Mise à jour de l'ID après la création

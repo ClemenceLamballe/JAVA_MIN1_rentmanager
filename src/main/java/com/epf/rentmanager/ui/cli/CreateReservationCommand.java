@@ -1,14 +1,24 @@
 package com.epf.rentmanager.ui.cli;
 
+import com.epf.rentmanager.configurations.AppConfiguration;
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.model.Reservation;
+import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.ServiceException;
 import com.epf.rentmanager.utils.IOUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.LocalDate;
 
 public class CreateReservationCommand {
+
+    private static ReservationService reservationService;
+    private CreateReservationCommand() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
+        this.reservationService = context.getBean(ReservationService.class);
+    }
 
     public static long createReservation() {
         long clientId = IOUtils.readLong("ID du client : ");
@@ -28,7 +38,7 @@ public class CreateReservationCommand {
         try {
 
 
-            long reservationId = ReservationService.getInstance().create(nouvelleReservation);
+            long reservationId = reservationService.create(nouvelleReservation);
 
             System.out.println("Réservation créée avec l'ID : " + reservationId+"\n");
         } catch (ServiceException | DaoException e) {

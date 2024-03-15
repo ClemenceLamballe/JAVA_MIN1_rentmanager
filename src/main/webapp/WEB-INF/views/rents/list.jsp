@@ -42,7 +42,7 @@
                                         <td>${reservation.debut}</td>
                                         <td>${reservation.fin}</td>
                                         <td>
-                                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/cars?id=${reservation.vehicle_id}">
+                                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/reservations/details?id=${reservation.vehicle_id}">
                                                 <i class="fa fa-play"></i>
                                             </a>
                                             <a class="btn btn-success disabled" href="#">

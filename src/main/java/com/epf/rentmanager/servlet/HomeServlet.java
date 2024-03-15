@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.epf.rentmanager.service.*;
 
 import com.epf.rentmanager.dao.DaoException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
@@ -19,19 +21,29 @@ public class HomeServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-
+	@Autowired
+	VehicleService vehicleService;
+	@Autowired
+	ClientService clientService;
+	@Autowired
+	ReservationService reservationService;
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			VehicleService vehicleService = VehicleService.getInstance();
+
 			int numberOfVehicles = vehicleService.count();
 			request.setAttribute("numberOfVehicles", numberOfVehicles);
 
-			ClientService clientService = ClientService.getInstance();
+
 			int numberOfClients = clientService.count();
 			request.setAttribute("numberOfClients", numberOfClients);
 
-			ReservationService reservationService = ReservationService.getInstance();
+
 			int numberOfReservations = reservationService.count();
 			request.setAttribute("numberOfReservations", numberOfReservations);
 

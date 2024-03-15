@@ -12,17 +12,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.model.Vehicle;
+import com.epf.rentmanager.service.ClientService;
+import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.ServiceException;
 import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 
 @WebServlet("/vehicles/list")
 public class VehicleListServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+    @Autowired
+    VehicleService vehicleService;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        VehicleService vehicleService = VehicleService.getInstance();
+
         try {
             List<Vehicle> vehicles = vehicleService.findAll();
             request.setAttribute("vehicles", vehicles);

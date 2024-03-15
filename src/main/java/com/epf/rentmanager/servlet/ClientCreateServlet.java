@@ -14,10 +14,22 @@ import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ServiceException;
+import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @WebServlet("/users/create")
 public class ClientCreateServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
+
+    @Autowired
+    ClientService clientService;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,7 +53,7 @@ public class ClientCreateServlet extends HttpServlet {
             Client newClient = new Client(-1, lastName, firstName, email, birthdate);
 
             // Call the create method in the service layer
-            ClientService clientService = ClientService.getInstance();
+            //ClientService clientService = ClientService.getInstance();
             long generatedId = clientService.create(newClient);
 
             // Update the ID after creation
