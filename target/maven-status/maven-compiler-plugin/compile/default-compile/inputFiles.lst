@@ -12,6 +12,7 @@ C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanage
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ClientListServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\persistence\FillDatabase.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\ReservationPlayServlet.java
+C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleDeleteServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\dao\DaoException.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\service\ClientService.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\Interface.java

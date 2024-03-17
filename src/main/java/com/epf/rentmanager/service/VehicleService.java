@@ -47,7 +47,9 @@ public class VehicleService {
 		}
 
 		try {
+			System.out.println("hello service");
 			 vehicleDao.delete(vehicleToDelete );
+			System.out.println("hello fin service");
 		} catch (DaoException e) {
 			throw new ServiceException();
 		}

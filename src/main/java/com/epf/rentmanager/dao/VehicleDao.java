@@ -55,25 +55,33 @@ public class VehicleDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Erreur lors de la création du PreparedStatement"+e);
-			throw new DaoException();
+			throw new DaoException("Erreur lors de la création du PreparedStatement");
 		}
 		return -1;
 	}
 
 	public long delete(Vehicle vehicle) throws DaoException {
 		try {
+			System.out.println("hello dao");
 			Connection connection = ConnectionManager.getConnection();
 			Statement statement = connection.createStatement();
 			PreparedStatement ps =
 					connection.prepareStatement(DELETE_VEHICLE_QUERY);
+			System.out.println("mid dao");
 
 			ps.setLong(1, vehicle.getId());
+			System.out.println("id dao"+vehicle.getId());
 			ps.execute();
+			System.out.println("execute");
 			ps.close();
 			connection.close();
+			System.out.println("fin dao");
 		} catch (SQLException e) {
-			throw new DaoException();
-		}
+			e.printStackTrace();
+			throw new DaoException("Dao exeption, erreur lors de la suppresion d'un vehicule");
+
+
+			}
 
 
 
@@ -98,7 +106,7 @@ public class VehicleDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur puour trouver un vehicule");
 		}
 		return null;
 
@@ -126,7 +134,7 @@ public class VehicleDao {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour trouver les vehicules");
 		}
 
 		return vehicles;
@@ -143,7 +151,7 @@ public class VehicleDao {
 			}
 
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour compter les vehicules");
 		}
 
 		return -1;

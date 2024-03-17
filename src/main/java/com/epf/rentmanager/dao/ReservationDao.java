@@ -56,7 +56,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur lors de la création d'une réservation");
 		}
 		return -1;
 	}
@@ -73,7 +73,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur lors de la suppression d'une réservation");
 		}
 
 		return 0;
@@ -103,7 +103,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour trouver la réservation");
 		}
 		return null;
 	}
@@ -130,7 +130,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour trouver la réservation");
 		}
 		return reservations;
 	}
@@ -156,7 +156,7 @@ public class ReservationDao {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour trouver les réservations");
 		}
 		return reservations;
 	}
@@ -180,7 +180,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour trouver la réservation");
 		}
 		return null;
 	}
@@ -195,7 +195,7 @@ public class ReservationDao {
 			}
 
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour compter les réservations");
 		}
 
 		return -1;

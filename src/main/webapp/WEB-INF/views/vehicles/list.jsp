@@ -36,26 +36,29 @@
                                 </tr>
                                 <tr>
 
-                                 <c:forEach items="${vehicles}" var="vehicle" varStatus="loop">
+                                    <c:forEach items="${vehicles}" var="vehicle" varStatus="loop">
                                                                     <tr>
-                                                                        <td>${loop.index + 1}</td>
+                                                                        <td>${vehicle.id}</td>
                                                                         <td>${vehicle.constructeur}</td>
                                                                         <td>${vehicle.modele}</td>
                                                                         <td>${vehicle.nb_places}</td>
+
                                 <!--<td>John Doe</td>-->
                                 <td>
-                                    <a class="btn btn-primary disabled" href="car-detail.html">
+                                    <a class="btn btn-primary " href="car-detail.html">
                                         <i class="fa fa-play"></i>
                                     </a>
-                                    <a class="btn btn-success disabled" href="#">
+                                    <a class="btn btn-success " href="#">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a class="btn btn-danger disabled" href="#">
-                                        <i class="fa fa-trash"></i>
+                                    <a class="btn btn-danger" href="${pageContext.request.contextPath}/vehicles/delete?id=${vehicle.id}">
+
+                                    <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
-                                                                    </tr>
-                                                                </c:forEach>
+                                </c:forEach>
+                            </tr>
+
                             </table>
                         </div>
                         <!-- /.box-body -->
