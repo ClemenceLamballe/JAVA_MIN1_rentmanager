@@ -89,7 +89,7 @@ public class ReservationDao {
 
 			ResultSet resultSet = ps.executeQuery();
 
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				Long vehicleID= resultSet.getLong("vehicle_id");
 				LocalDate Debut = resultSet.getDate("debut").toLocalDate();
 				LocalDate Fin = resultSet.getDate("fin").toLocalDate();
@@ -97,7 +97,7 @@ public class ReservationDao {
 
 				Reservation reservation = new Reservation(id, clientId,  vehicleID,  Debut, Fin);
 				reservations.add(reservation);
-				return reservations;
+
 			}
 
 			ps.close();
@@ -105,7 +105,7 @@ public class ReservationDao {
 		} catch (SQLException e) {
 			throw new DaoException("Erreur pour trouver la réservation");
 		}
-		return null;
+		return reservations;
 	}
 	
 	public List<Reservation> findResaByVehicleId(long vehicleId) throws DaoException {

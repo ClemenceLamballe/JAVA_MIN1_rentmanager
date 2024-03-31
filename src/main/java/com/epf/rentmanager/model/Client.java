@@ -10,7 +10,7 @@ public class Client {
     private String prenom;
     private String email;
     private LocalDate naissance;
-    private long id;//PRIMARY KEY
+    private long id;
     //constructeur vide
     public Client() {
         //valeurs par défaut?

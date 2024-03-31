@@ -32,7 +32,7 @@ public class VehicleService {
 
 		if (vehicle.getConstructeur().isEmpty()|| vehicle.getModele().isEmpty()  || vehicle.getNb_places()<=1) {
 			System.out.println("Veuillez remplir tout les champs");
-			throw new ServiceException();
+			throw new ServiceException("Erreur dans la création de vehicule");
 
         }
 
@@ -43,15 +43,13 @@ public class VehicleService {
 	public void delete(long vehicleId) throws ServiceException, DaoException {
 		Vehicle vehicleToDelete = this.findById(vehicleId);
 		if (vehicleToDelete  == null) {
-			throw new ServiceException();
+			throw new ServiceException("Erreur dans la suppression de vehicule : vehicule nul");
 		}
 
 		try {
-			System.out.println("hello service");
 			 vehicleDao.delete(vehicleToDelete );
-			System.out.println("hello fin service");
 		} catch (DaoException e) {
-			throw new ServiceException();
+			throw new ServiceException("Erreur dans la suppression de vehicule ");
 		}
 	}
 	public Vehicle findById(long id) throws ServiceException, DaoException {

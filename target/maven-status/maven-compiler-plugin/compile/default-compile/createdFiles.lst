@@ -9,6 +9,7 @@ com\epf\rentmanager\ui\cli\ListVehicleCommand.class
 com\epf\rentmanager\servlet\ReservationCreateServlet.class
 com\epf\rentmanager\servlet\VehicleCreateServlet.class
 com\epf\rentmanager\servlet\ClientListServlet.class
+com\epf\rentmanager\servlet\ClientEditServlet.class
 com\epf\rentmanager\servlet\HomeServlet.class
 com\epf\rentmanager\ui\cli\CreateVehicleCommand.class
 com\epf\rentmanager\ui\cli\DeleteVehicleCommand.class

@@ -26,7 +26,7 @@ public class ClientService {
 		// On empêchera la création ou la mise à jour d’un Client si son
 		//nom/prenom est vide.
 		if (client.getNom().isEmpty() || client.getPrenom().isEmpty()) {
-			throw new ServiceException();
+			throw new ServiceException("erreur, nom ou prenom nul");
 		}
 
 		// nom de famille en MAJUSCULES
@@ -40,13 +40,13 @@ public class ClientService {
 	public void delete(long clientId) throws ServiceException, DaoException {
 		Client clientToDelete = this.findById(clientId);
 		if (clientToDelete == null) {
-			throw new ServiceException();
+			throw new ServiceException("erreur dans la suppression d'un client : client nul");
 		}
 
 		try {
 			clientDao.delete(clientToDelete);
 		} catch (DaoException e) {
-			throw new ServiceException();
+			throw new ServiceException("erreur dans la suppression d'un client");
 		}
 	}
 	public Client findById(long id) throws DaoException {
@@ -61,6 +61,14 @@ public class ClientService {
 
 	public int count() throws ServiceException, DaoException {
 		return clientDao.countClients();
+	}
+
+	public void update(Client client) throws ServiceException, DaoException {
+		try {
+			clientDao.update(client);
+		} catch (DaoException e) {
+			throw new ServiceException("Erreur lors de la mise à jour du client");
+		}
 	}
 
 

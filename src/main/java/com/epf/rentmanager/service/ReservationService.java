@@ -23,13 +23,13 @@ public class ReservationService {
     public void delete(long reservationId) throws ServiceException, DaoException {
         Reservation reservationToDelete = reservationDao.findById(reservationId);
         if (reservationToDelete == null) {
-            throw new ServiceException();
+            throw new ServiceException("Erreur dans la suppression de reservation : reservation nulle");
         }
 
         try {
             reservationDao.delete(reservationToDelete);
         } catch (DaoException e) {
-            throw new ServiceException();
+            throw new ServiceException("Erreur dans la spression de vehicule");
         }
     }
 

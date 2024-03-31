@@ -48,19 +48,19 @@ public class ClientDetailsServlet extends HttpServlet {
         if (client != null) {
             // Récupérer les réservations du client
             List<Reservation> reservations = reservationService.findReservationsByClientId(clientId);
+            System.out.println("cpt"+ reservations.size());
             List<Vehicle> vehicles = new ArrayList<>();
             List<String> vehicleManufacturers = new ArrayList<>();
-            if (reservations != null) {
-                for (Reservation reservation : reservations) {
+
+            for (Reservation reservation : reservations) {
                 long vehicleId = reservation.getVehicle_id();
                 Vehicle vehicle = vehicleService.findById(vehicleId);
                 vehicles.add(vehicle);
                 vehicleManufacturers.add(vehicle.getConstructeur());
             }
-                reservationsCount = reservations.size();
-                vehiclesCount = vehicles.size();
-            }
 
+            reservationsCount = reservations.size();
+            vehiclesCount = vehicles.size();
 
 
             request.setAttribute("reservationsCount", reservationsCount);
