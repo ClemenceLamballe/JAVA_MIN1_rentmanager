@@ -36,9 +36,9 @@
                                 </tr>
                                 <c:forEach items="${reservations}" var="reservation" varStatus="loop">
                                     <tr>
-                                        <td>${loop.index + 1}</td>
-                                        <td>${reservation.vehicle_id}</td>
-                                        <td>${reservation.client_id}</td>
+                                        <td>${reservation.id}</td>
+                                        <td>${vehicles[loop.index].constructeur}</td>
+                                        <td>${clients[loop.index].nom}</td>
                                         <td>${reservation.debut}</td>
                                         <td>${reservation.fin}</td>
                                         <td>

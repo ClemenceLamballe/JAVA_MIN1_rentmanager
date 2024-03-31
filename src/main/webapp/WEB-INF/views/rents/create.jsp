@@ -54,7 +54,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="start_date" name="start_date" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                               data-inputmask="'alias': 'dd/MM/yyyy'" data-mask>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -62,7 +62,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="end_date" name="end_date" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                               data-inputmask="'alias': 'dd/MM/yyyy'" data-mask>
                                     </div>
                                 </div>
                             </div>

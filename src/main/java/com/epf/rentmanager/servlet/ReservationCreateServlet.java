@@ -62,7 +62,7 @@ public class ReservationCreateServlet extends HttpServlet {
             // Retrieve reservation details from the form
             long clientId = Long.parseLong(request.getParameter("client_id"));
             long vehicleId = Long.parseLong(request.getParameter("vehicle_id"));
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate startDate = LocalDate.parse(request.getParameter("start_date"), formatter);
             LocalDate endDate = LocalDate.parse(request.getParameter("end_date"), formatter);
 

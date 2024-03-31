@@ -38,7 +38,7 @@
 
                                 <c:forEach items="${clients}" var="client" varStatus="loop">
                                     <tr>
-                                        <td>${loop.index + 1}</td>
+                                        <td>${client.id}</td>
                                         <td>${client.nom}</td>
                                         <td>${client.prenom}</td>
                                         <td>${client.email}</td>
