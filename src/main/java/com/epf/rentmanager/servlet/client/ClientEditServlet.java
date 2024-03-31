@@ -1,4 +1,4 @@
-package com.epf.rentmanager.servlet;
+package com.epf.rentmanager.servlet.client;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -17,6 +17,8 @@ import com.epf.rentmanager.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+
+
 @WebServlet("/users/edit")
 public class ClientEditServlet extends HttpServlet {
 
@@ -26,7 +28,9 @@ public class ClientEditServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        System.out.println("debut");
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -57,4 +61,5 @@ public class ClientEditServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
 }

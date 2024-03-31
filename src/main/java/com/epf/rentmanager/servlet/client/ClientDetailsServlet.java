@@ -1,4 +1,4 @@
-package com.epf.rentmanager.servlet;
+package com.epf.rentmanager.servlet.client;
 
 import java.io.IOException;
 import java.util.ArrayList;

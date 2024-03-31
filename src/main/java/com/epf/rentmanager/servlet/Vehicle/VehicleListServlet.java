@@ -1,4 +1,4 @@
-package com.epf.rentmanager.servlet;
+package com.epf.rentmanager.servlet.Vehicle;
 
 import java.io.IOException;
 import java.util.List;

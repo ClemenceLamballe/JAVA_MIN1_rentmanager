@@ -47,7 +47,28 @@ public class ReservationService {
         return reservationDao.findResaByVehicleId(vehicleId);
     }
 
+    public Reservation findById(long id) throws ServiceException {
+        try {
+            return reservationDao.findById(id);
+        } catch (DaoException e) {
+            throw new ServiceException("Erreur lors de la récupération de la réservation");
+        }
+    }
+
+
     public int count() throws ServiceException, DaoException {
         return reservationDao.countReservation();
     }
+
+    public void update(Reservation reservation) throws ServiceException {
+        try {
+            //if (reservation.getDebut().isAfter(reservation.getFin())) {
+              //  throw new ServiceException("La date de début ne peut pas être après la date de fin.");
+            //}
+            reservationDao.update(reservation);
+        } catch (DaoException e) {
+            throw new ServiceException("Erreur lors de la mise à jour de la réservation dans le Service");
+        }
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.epf.rentmanager.servlet;
+package com.epf.rentmanager.servlet.Vehicle;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,43 +10,38 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.model.Reservation;
-import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.ServiceException;
+import com.epf.rentmanager.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-@WebServlet("/users/delete")
-public class ClientDeleteServlet extends HttpServlet {
+@WebServlet("/vehicles/delete")
+public class VehicleDeleteServlet extends HttpServlet {
 
     @Autowired
-    private ClientService clientService;
-
+    private VehicleService vehicleService;
     @Autowired
     private ReservationService reservationService;
-
 
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        long clientId = Long.parseLong(request.getParameter("id"));
+
         try {
-            List<Reservation> reservations = reservationService.findReservationsByClientId(clientId);
+            long vehicleId = Long.parseLong(request.getParameter("id"));
+            List<Reservation> reservations = reservationService.findReservationsByVehicleId(vehicleId);
             for (Reservation reservation : reservations) {
                 reservationService.delete(reservation.getId());
             }
-            clientService.delete(clientId);
-            // Rediriger vers une page de confirmation ou une autre page
-            response.sendRedirect(request.getContextPath() + "/clients/list"); // Redirige vers la liste des utilisateurs par exemple
-        } catch (NumberFormatException | ServiceException | DaoException e) {
-            e.printStackTrace();  // Gérer l'exception
-            // Rediriger vers une page d'erreur
-
+            vehicleService.delete(vehicleId);
+            response.sendRedirect(request.getContextPath() + "/vehicles/list");
+        } catch (ServiceException | DaoException e) {
+            e.printStackTrace();
         }
     }
 }

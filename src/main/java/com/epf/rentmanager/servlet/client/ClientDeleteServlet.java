@@ -1,4 +1,4 @@
-package com.epf.rentmanager.servlet;
+package com.epf.rentmanager.servlet.client;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,38 +10,43 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.model.Reservation;
+import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.ServiceException;
-import com.epf.rentmanager.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-@WebServlet("/vehicles/delete")
-public class VehicleDeleteServlet extends HttpServlet {
+@WebServlet("/users/delete")
+public class ClientDeleteServlet extends HttpServlet {
 
     @Autowired
-    private VehicleService vehicleService;
+    private ClientService clientService;
+
     @Autowired
     private ReservationService reservationService;
+
 
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        long clientId = Long.parseLong(request.getParameter("id"));
         try {
-            long vehicleId = Long.parseLong(request.getParameter("id"));
-            List<Reservation> reservations = reservationService.findReservationsByVehicleId(vehicleId);
+            List<Reservation> reservations = reservationService.findReservationsByClientId(clientId);
             for (Reservation reservation : reservations) {
                 reservationService.delete(reservation.getId());
             }
-            vehicleService.delete(vehicleId);
-            response.sendRedirect(request.getContextPath() + "/vehicles/list");
-        } catch (ServiceException | DaoException e) {
-            e.printStackTrace();
+            clientService.delete(clientId);
+            // Rediriger vers une page de confirmation ou une autre page
+            response.sendRedirect(request.getContextPath() + "/clients/list"); // Redirige vers la liste des utilisateurs par exemple
+        } catch (NumberFormatException | ServiceException | DaoException e) {
+            e.printStackTrace();  // Gérer l'exception
+            // Rediriger vers une page d'erreur
+
         }
     }
 }
