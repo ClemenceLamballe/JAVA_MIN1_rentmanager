@@ -59,7 +59,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur lors de la création d'une réservation");
+			throw new DaoException("Erreur lors de la création d'une réservation",e);
 		}
 		return -1;
 	}
@@ -76,7 +76,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur lors de la suppression d'une réservation");
+			throw new DaoException("Erreur lors de la suppression d'une réservation",e);
 		}
 
 		return 0;
@@ -106,7 +106,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour trouver la réservation");
+			throw new DaoException("Erreur pour trouver la réservation",e);
 		}
 		return reservations;
 	}
@@ -133,7 +133,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour trouver la réservation");
+			throw new DaoException("Erreur pour trouver la réservation",e);
 		}
 		return reservations;
 	}
@@ -159,7 +159,7 @@ public class ReservationDao {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour trouver les réservations");
+			throw new DaoException("Erreur pour trouver les réservations",e);
 		}
 		return reservations;
 	}
@@ -183,7 +183,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour trouver la réservation");
+			throw new DaoException("Erreur pour trouver la réservation",e);
 		}
 		return null;
 	}
@@ -198,7 +198,7 @@ public class ReservationDao {
 			}
 
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour compter les réservations");
+			throw new DaoException("Erreur pour compter les réservations",e);
 		}
 
 		return -1;
@@ -223,7 +223,7 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur lors de la mise à jour de la réservation dans le DAO");
+			throw new DaoException("Erreur lors de la mise à jour de la réservation dans le DAO",e);
 		}
 	}
 }

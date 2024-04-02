@@ -23,7 +23,8 @@ public class VehicleDao {
 	private static final String DELETE_VEHICLE_QUERY = "DELETE FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur, modele, nb_places FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, modele, nb_places FROM Vehicle;";
-	
+	private static final String UPDATE_VEHICLE_QUERY = "UPDATE Vehicle SET constructeur=?, modele=?, nb_places=? WHERE id=?;";
+
 	public long create(Vehicle vehicle) throws DaoException {
 		try {
 
@@ -54,8 +55,7 @@ public class VehicleDao {
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Erreur lors de la création du PreparedStatement"+e);
-			throw new DaoException("Erreur lors de la création du PreparedStatement");
+			throw new DaoException("Erreur lors de la création du PreparedStatement",e);
 		}
 		return -1;
 	}
@@ -78,7 +78,7 @@ public class VehicleDao {
 			System.out.println("fin dao");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DaoException("Dao exeption, erreur lors de la suppresion d'un vehicule");
+			throw new DaoException("Dao exeption, erreur lors de la suppresion d'un vehicule",e);
 
 
 			}
@@ -106,7 +106,7 @@ public class VehicleDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur puour trouver un vehicule");
+			throw new DaoException("Erreur puour trouver un vehicule",e);
 		}
 		return null;
 
@@ -134,7 +134,7 @@ public class VehicleDao {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour trouver les vehicules");
+			throw new DaoException("Erreur pour trouver les vehicules",e);
 		}
 
 		return vehicles;
@@ -151,11 +151,24 @@ public class VehicleDao {
 			}
 
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour compter les vehicules");
+			throw new DaoException("Erreur pour compter les vehicules",e);
 		}
 
 		return -1;
 	}
-	
+
+
+	public void update(Vehicle vehicle) throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(UPDATE_VEHICLE_QUERY)) {
+			statement.setString(1, vehicle.getConstructeur());
+			statement.setString(2, vehicle.getModele());
+			statement.setInt(3, vehicle.getNb_places());
+			statement.setLong(4, vehicle.getId());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Error updating vehicle",e);
+		}
+	}
 
 }

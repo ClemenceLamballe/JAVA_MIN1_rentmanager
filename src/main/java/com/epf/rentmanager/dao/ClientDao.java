@@ -51,7 +51,7 @@ public class  ClientDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur lors de la création d'un client");
+			throw new DaoException("Erreur lors de la création d'un client",e);
 		}
 		return -1;
 	}
@@ -69,7 +69,7 @@ public class  ClientDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur lors de la suppression d'un client");
+			throw new DaoException("Erreur lors de la suppression d'un client",e);
 		}
 
 
@@ -97,7 +97,7 @@ public class  ClientDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour trouver un client");
+			throw new DaoException("Erreur pour trouver un client",e);
 		}
 		return null;
 
@@ -126,7 +126,7 @@ public class  ClientDao {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour trouver les clients");
+			throw new DaoException("Erreur pour trouver les clients",e);
 		}
 
 		return clients;
@@ -142,7 +142,7 @@ public class  ClientDao {
 			}
 
 		} catch (SQLException e) {
-			throw new DaoException("Erreur pour compter les clients");
+			throw new DaoException("Erreur pour compter les clients",e);
 		}
 
 		return -1;
@@ -164,7 +164,7 @@ public class  ClientDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException("Erreur lors de la mise à jour d'un client");
+			throw new DaoException("Erreur lors de la mise à jour d'un client",e);
 		}
 	}
 

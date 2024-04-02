@@ -24,5 +24,6 @@ com\epf\rentmanager\servlet\Reservation\ReservationEditServlet.class
 com\epf\rentmanager\ui\cli\ListReservationsByVehicleCommand.class
 com\epf\rentmanager\servlet\client\ClientDetailsServlet.class
 com\epf\rentmanager\servlet\client\ClientCreateServlet.class
+com\epf\rentmanager\servlet\Vehicle\VehicleEditServlet.class
 com\epf\rentmanager\ui\cli\CreateReservationCommand.class
 com\epf\rentmanager\servlet\Vehicle\VehicleListServlet.class

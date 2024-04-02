@@ -22,34 +22,29 @@ public class VehicleService {
 	private VehicleService(VehicleDao vehicleDao){
 		this.vehicleDao = vehicleDao;
 	}
-	
-	
+
+
 	public long create(Vehicle vehicle) throws ServiceException, DaoException {
+		try {
+			if (vehicle.getConstructeur().isEmpty() || vehicle.getModele().isEmpty() || vehicle.getNb_places() <= 1) {
+				System.out.println("Veuillez remplir tous les champs");
 
-		//Vérifications :
-		//si son constructeur (manufacturer) est vide.
-		//le nombres de places est supérieure à 1.
+				throw new ServiceException("Erreur dans la création de véhicule");
+			}
 
-		if (vehicle.getConstructeur().isEmpty()|| vehicle.getModele().isEmpty()  || vehicle.getNb_places()<=1) {
-			System.out.println("Veuillez remplir tout les champs");
-			throw new ServiceException("Erreur dans la création de vehicule");
+			return vehicleDao.create(vehicle);
+		} catch (DaoException e) {
+			throw new DaoException("Erreur lors de la création du véhicule", e);
+		}
+	}
 
-        }
-
-
-		// TODO: créer un véhicule
-        return vehicleDao.create(vehicle);
-    }
 	public void delete(long vehicleId) throws ServiceException, DaoException {
 		Vehicle vehicleToDelete = this.findById(vehicleId);
-		if (vehicleToDelete  == null) {
-			throw new ServiceException("Erreur dans la suppression de vehicule : vehicule nul");
-		}
 
 		try {
 			 vehicleDao.delete(vehicleToDelete );
 		} catch (DaoException e) {
-			throw new ServiceException("Erreur dans la suppression de vehicule ");
+			throw new ServiceException("Erreur dans la suppression de vehicule ",e);
 		}
 	}
 	public Vehicle findById(long id) throws ServiceException, DaoException {
@@ -66,6 +61,15 @@ public class VehicleService {
 
 	public int count() throws ServiceException, DaoException {
 		return vehicleDao.count();
+	}
+
+
+	public void update(Vehicle vehicle) throws ServiceException {
+		try {
+			vehicleDao.update(vehicle);
+		} catch (DaoException e) {
+			throw new ServiceException("Error updating vehicle", e);
+		}
 	}
 	
 }
