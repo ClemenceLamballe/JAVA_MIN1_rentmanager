@@ -45,7 +45,7 @@
 
                                 <!--<td>John Doe</td>-->
                                 <td>
-                                    <a class="btn btn-primary " href="car-detail.html">
+                                    <a class="btn btn-primary " href="${pageContext.request.contextPath}/vehicles/details?id=${vehicle.id}">
                                         <i class="fa fa-play"></i>
                                     </a>
                                     <a class="btn btn-success " href="${pageContext.request.contextPath}/vehicles/edit?id=${vehicle.id}">
