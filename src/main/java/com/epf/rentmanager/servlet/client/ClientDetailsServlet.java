@@ -50,6 +50,8 @@ public class ClientDetailsServlet extends HttpServlet {
             List<Reservation> reservations = reservationService.findReservationsByClientId(clientId);
             System.out.println("cpt"+ reservations.size());
             List<Vehicle> vehicles = new ArrayList<>();
+            List<Vehicle> vehiclesunique = new ArrayList<>();
+
             List<String> vehicleManufacturers = new ArrayList<>();
 
             for (Reservation reservation : reservations) {
@@ -57,22 +59,29 @@ public class ClientDetailsServlet extends HttpServlet {
                 Vehicle vehicle = vehicleService.findById(vehicleId);
                 vehicles.add(vehicle);
                 vehicleManufacturers.add(vehicle.getConstructeur());
+
+                boolean vehicleExists = false;
+                for (Vehicle existingVehicle : vehiclesunique) {
+                    if (existingVehicle.getId() == vehicleId) {
+                        vehicleExists = true;
+                        break;
+                    }
+                }
+                if (!vehicleExists) {
+                    vehiclesunique.add(vehicle);
+                }
             }
 
             reservationsCount = reservations.size();
             vehiclesCount = vehicles.size();
 
 
-            request.setAttribute("reservationsCount", reservationsCount);
-            request.setAttribute("vehiclesCount", vehiclesCount);
             request.setAttribute("reservations", reservations);
             request.setAttribute("vehicles", vehicles);
 
-            request.setAttribute("clientPrenom", client.getPrenom());
-            request.setAttribute("clientNom", client.getNom());
-            request.setAttribute("clientEmail", client.getEmail());
+            request.setAttribute("client", client);
 
-            request.setAttribute("vehicleManufacturers", vehicleManufacturers);
+            request.setAttribute("vehiclesunique", vehiclesunique);
 
 
             // Dispatcher vers la page des détails du client

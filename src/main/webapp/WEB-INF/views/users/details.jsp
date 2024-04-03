@@ -20,14 +20,14 @@
                     <!-- Profile Image -->
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <h3 class="profile-username text-center">${clientPrenom} ${clientNom} (${clientEmail})</h3>
+                            <h3 class="profile-username text-center">${client.prenom} ${client.nom} (${client.email})</h3>
 
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>Reservation(s)</b> <a class="pull-right">${reservationsCount}</a>
+                                    <b>Reservation(s)</b> <a class="pull-right">${reservations.size()}</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Voiture(s)</b> <a class="pull-right">${vehiclesCount}</a>
+                                    <b>Voiture(s)</b> <a class="pull-right">${vehiclesunique.size()}</a>
                                 </li>
                             </ul>
                         </div>
@@ -55,7 +55,7 @@
                                         <c:forEach items="${reservations}" var="reservation" varStatus="status">
                                             <tr>
                                                 <td>${reservation.id}</td>
-                                                <td>${vehicleManufacturers[status.index]}</td>
+                                                <td>${vehicles[status.index].constructeur} #${vehicles[status.index].id} </td>
                                                 <td>${reservation.debut}</td>
                                                 <td>${reservation.fin}</td>
                                             </tr>
@@ -74,7 +74,7 @@
                                             <th>Constructeur</th>
                                             <th style=>Nombre de places</th>
                                         </tr>
-                                        <c:forEach items="${vehicles}" var="vehicle">
+                                        <c:forEach items="${vehiclesunique}" var="vehicle">
                                             <tr>
                                                 <td>${vehicle.id}</td>
                                                 <td>${vehicle.modele}</td>

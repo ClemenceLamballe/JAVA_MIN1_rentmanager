@@ -6,6 +6,7 @@ C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanage
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\configurations\AppConfiguration.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\CreateReservationCommand.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\Reservation\ReservationCreateServlet.java
+C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\Reservation\ReservationDetailsServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\Vehicle\VehicleDeleteServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\configurations\WebConfiguration.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\dao\VehicleDao.java
@@ -33,7 +34,6 @@ C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanage
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\DeleteClientCommand.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\client\ClientDeleteServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\utils\IOUtils.java
-C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\Reservation\ReservationPlayServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\persistence\ConnectionManager.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\servlet\client\ClientDetailsServlet.java
 C:\Users\Clem\Documents\VIE_SCOLAIRE\EPF4A\COURS\JAVA\TP4\rentmanager\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\CreateClientCommand.java

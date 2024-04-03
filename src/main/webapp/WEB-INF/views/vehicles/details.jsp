@@ -48,14 +48,14 @@
                                     <table class="table table-striped">
                                         <tr>
                                             <th style="width: 10px">#</th>
-                                            <th>Voiture</th>
+                                            <th>Client</th>
                                             <th>Date de debut</th>
                                             <th>Date de fin</th>
                                         </tr>
                                         <c:forEach items="${reservations}" var="reservation" varStatus="status">
                                             <tr>
                                                 <td>${reservation.id}</td>
-                                                <td>${vehicles[status.index].getConstructeur()}</td>
+                                                <td>${clientsreservation[status.index].getNom()} #${clientsreservation[status.index].id}</td>
                                                 <td>${reservation.debut}</td>
                                                 <td>${reservation.fin}</td>
                                             </tr>
@@ -72,7 +72,8 @@
                                             <th style="width: 10px">#</th>
                                             <th>Nom</th>
                                             <th>Prenom</th>
-                                            <th style=>Naissance</th>
+                                            <th> Naissance</th>
+                                            <th> Email</th>
                                         </tr>
                                         <c:forEach items="${clients}" var="client">
                                             <tr>
@@ -80,6 +81,7 @@
                                                 <td>${client.nom}</td>
                                                 <td>${client.prenom}</td>
                                                 <td>${client.naissance}</td>
+                                                <td>${client.email}</td>
                                             </tr>
                                         </c:forEach>
                                     </table>

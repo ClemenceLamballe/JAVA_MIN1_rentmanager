@@ -43,6 +43,7 @@ public class VehicleDetailsServlet extends HttpServlet {
 
         List<Reservation> reservations = new ArrayList<>();
         List<Client> clients = new ArrayList<>();
+        List<Client> clientsreservation = new ArrayList<>();
         List<Vehicle> vehicles = new ArrayList<>();
 
         try {
@@ -57,8 +58,20 @@ public class VehicleDetailsServlet extends HttpServlet {
                         Vehicle vehiclelist = vehicleService.findById(vehicleIdlist);
                         vehicles.add(vehiclelist);
 
-                        Client client = clientService.findById(reservation.getClient_id());
-                        clients.add(client);
+                        long clientId = reservation.getClient_id();
+                        Client clientR = clientService.findById(clientId);
+                        clientsreservation.add(clientR);
+                        boolean clientExists = false;
+                        for (Client existingClient : clients) {
+                            if (existingClient.getId() == clientId) {
+                                clientExists = true;
+                                break;
+                            }
+                        }
+                        if (!clientExists) {
+                            Client client = clientService.findById(clientId);
+                            clients.add(client);
+                        }
                     }
                 }
 
@@ -66,6 +79,7 @@ public class VehicleDetailsServlet extends HttpServlet {
                 request.setAttribute("vehicle", vehicle);
                 request.setAttribute("vehicles", vehicles);
                 request.setAttribute("clients", clients);
+                request.setAttribute("clientsreservation", clientsreservation);
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicles/details.jsp");
                 dispatcher.forward(request, response);
