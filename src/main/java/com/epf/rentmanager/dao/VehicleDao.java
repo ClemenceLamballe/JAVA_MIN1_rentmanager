@@ -62,20 +62,15 @@ public class VehicleDao {
 
 	public long delete(Vehicle vehicle) throws DaoException {
 		try {
-			System.out.println("hello dao");
 			Connection connection = ConnectionManager.getConnection();
 			Statement statement = connection.createStatement();
 			PreparedStatement ps =
 					connection.prepareStatement(DELETE_VEHICLE_QUERY);
-			System.out.println("mid dao");
 
 			ps.setLong(1, vehicle.getId());
-			System.out.println("id dao"+vehicle.getId());
 			ps.execute();
-			System.out.println("execute");
 			ps.close();
 			connection.close();
-			System.out.println("fin dao");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException("Dao exeption, erreur lors de la suppresion d'un vehicule",e);

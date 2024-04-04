@@ -21,7 +21,6 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 
 public class VehicleCreateServlet extends HttpServlet {
-    //private static final long serialVersionUID = 1L;
     @Autowired
     VehicleService vehicleService;
     @Override
@@ -31,7 +30,6 @@ public class VehicleCreateServlet extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Affichage du formulaire
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp");
         dispatcher.forward(request, response);
     }
@@ -44,24 +42,32 @@ public class VehicleCreateServlet extends HttpServlet {
             String modele = request.getParameter("modele");
             int nbPlaces = Integer.parseInt(request.getParameter("nb_places"));
 
-            // Création d'un objet Vehicle avec un ID par défaut (-1)
-            Vehicle newVehicle = new Vehicle(-1, constructeur, modele, nbPlaces);
+            if (constructeur.isEmpty()) {
+                request.setAttribute("VehicleConstructeurErrorMessage", "Le constructeur du véhicule est requis.");
+            }
+            if (modele.isEmpty()) {
+                request.setAttribute("VehicleModeleErrorMessage", "Le modèle du véhicule est requis.");
+            }
+            if (nbPlaces < 2 || nbPlaces > 9) {
+                request.setAttribute("VehicleNbPlacesErrorMessage", "Le nombre de places du véhicule doit être compris entre 2 et 9.");
+            }
 
-            // Appel à la méthode create du service
-            //VehicleService vehicleService = VehicleService.getInstance();
+            if (constructeur.isEmpty() || modele.isEmpty() || nbPlaces < 2 || nbPlaces > 9) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            Vehicle newVehicle = new Vehicle(-1, constructeur, modele, nbPlaces);
             long generatedId = vehicleService.create(newVehicle);
 
-            // Mise à jour de l'ID après la création
             newVehicle.setId(generatedId);
 
-            // Mise à jour du nombre de véhicules dans la session
             int numberOfVehicles = vehicleService.count();
             request.getSession().setAttribute("numberOfVehicles", numberOfVehicles);
 
-            // Redirection vers la liste des véhicules
             response.sendRedirect(request.getContextPath() + "/vehicles/list");
         } catch (ServiceException | DaoException e) {
-            // Gérer l'exception (par exemple, rediriger vers une page d'erreur)
             e.printStackTrace();
         }
     }

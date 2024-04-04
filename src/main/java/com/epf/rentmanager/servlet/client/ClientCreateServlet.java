@@ -2,6 +2,7 @@ package com.epf.rentmanager.servlet.client;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,29 +42,49 @@ public class ClientCreateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // Retrieve client details from the form
             String firstName = request.getParameter("first_name");
-
             String lastName = request.getParameter("last_name");
-
             String email = request.getParameter("email");
             LocalDate birthdate = LocalDate.parse(request.getParameter("birthdate"));
 
-            // Create a new Client object
+            if (firstName.length() < 3 ) {
+                request.setAttribute("NameErrorMessage", "Le nom et le prénom doivent contenir au moins 3 caractères.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/users/create.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            if ( lastName.length() < 3) {
+                request.setAttribute("LastNameErrorMessage", "Le nom et le prénom doivent contenir au moins 3 caractères.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/users/create.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            LocalDate now = LocalDate.now();
+            if (birthdate.plusYears(18).isAfter(now)) {
+                request.setAttribute("BirthdateErrorMessage", "Vous devez avoir au moins 18 ans pour vous inscrire.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/users/create.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            List<Client> clients = clientService.findAll();
+            for (Client existingClient : clients) {
+                if (existingClient.getEmail().equals(email)) {
+                    request.setAttribute("EmailErrorMessage", "Cette adresse e-mail est déjà utilisée par un autre client.");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/users/create.jsp");
+                    dispatcher.forward(request, response);
+                    return;
+                }
+            }
+
             Client newClient = new Client(-1, lastName, firstName, email, birthdate);
-
-            // Call the create method in the service layer
-            //ClientService clientService = ClientService.getInstance();
             long generatedId = clientService.create(newClient);
-
-            // Update the ID after creation
             newClient.setId(generatedId);
-
-            // Redirect to the client list page
             response.sendRedirect(request.getContextPath() + "/clients/list");
         } catch (ServiceException | DaoException e) {
-            // Handle exceptions (e.g., redirect to an error page)
-            e.printStackTrace(); // For now, print the stack trace.
+            e.printStackTrace();
         }
     }
 }

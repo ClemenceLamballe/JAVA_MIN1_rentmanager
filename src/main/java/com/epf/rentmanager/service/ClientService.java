@@ -1,5 +1,6 @@
 package com.epf.rentmanager.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,20 +22,28 @@ public class ClientService {
 	
 	
 	public long create(Client client) throws ServiceException, DaoException {
-
-
-		// On empêchera la création ou la mise à jour d’un Client si son
-		//nom/prenom est vide.
 		if (client.getNom().isEmpty() || client.getPrenom().isEmpty()) {
 			throw new ServiceException("erreur, nom ou prenom nul");
 		}
 
-		// nom de famille en MAJUSCULES
+		if (client.getNom().length() < 3 || client.getPrenom().length() < 3) {
+			throw new ServiceException("Erreur, nom ou prénom doit contenir au moins 3 caractères");
+		}
+
+		LocalDate now = LocalDate.now();
+		LocalDate birthdate = client.getNaissance();
+		if (birthdate.plusYears(18).isAfter(now)) {
+			throw new ServiceException("Vous devez avoir au moins 18 ans pour vous inscrire.");
+		}
+
+		List<Client> clients = clientDao.findAll();
+		for (Client existingClient : clients) {
+			if (existingClient.getEmail().equals(client.getEmail())) {
+				throw new ServiceException("Cette adresse e-mail est déjà utilisée par un autre client.");
+			}
+		}
+
 		client.setNom(client.getNom().toUpperCase());
-
-		// TODO: créer un client dans la base de données
-
-
 		return clientDao.create(client);
 	}
 	public void delete(long clientId) throws ServiceException, DaoException {

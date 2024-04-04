@@ -33,7 +33,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-control" id="vehicle_id" name="vehicle_id">
                                             <c:forEach items="${vehicles}" var="vehicle">
-                                                <option value="${vehicle.id}">${vehicle.constructeur} ${vehicle.modele}</option>
+                                                <option value="${vehicle.id}"  <c:if test="${vehicle.id eq vehicleSelected.id}">selected</c:if>>${vehicle.constructeur} ${vehicle.modele}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -44,7 +44,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-control" id="client_id" name="client_id">
                                             <c:forEach items="${clients}" var="client">
-                                                <option value="${client.id}">${client.nom} ${client.prenom}</option>
+                                                <option value="${client.id}" <c:if test="${client.id eq clientSelected.id}">selected</c:if>>${client.nom} ${client.prenom}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -55,6 +55,16 @@
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="start_date" name="start_date" required
                                                data-inputmask="'alias': 'dd/MM/yyyy'" data-mask>
+                                        <c:if test="${not empty requestScope.StartDateErrorMessage}">
+                                            <div class="text-danger">${requestScope.StartDateErrorMessage}</div>
+                                        </c:if>
+                                        <c:if test="${not empty requestScope.ConsecutiveDaysErrorMessage}">
+                                            <div class="text-danger">${requestScope.ConsecutiveDaysErrorMessage}</div>
+                                        </c:if>
+                                        <c:if test="${not empty requestScope.ConsecutiveDaysVehicleErrorMessage}">
+                                            <div class="text-danger">${requestScope.ConsecutiveDaysVehicleErrorMessage}</div>
+                                        </c:if>
+
                                     </div>
                                 </div>
                                 <div class="form-group">

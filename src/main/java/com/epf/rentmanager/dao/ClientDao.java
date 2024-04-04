@@ -30,6 +30,7 @@ public class  ClientDao {
 	
 	public long create(Client client) throws DaoException {
 		try {
+
 			Connection connection = ConnectionManager.getConnection();
 			Statement statement = connection.createStatement();
 			PreparedStatement ps =
@@ -39,6 +40,7 @@ public class  ClientDao {
 			ps.setString(2, client.getPrenom());
 			ps.setString(3, client.getEmail());
 			ps.setDate(4, Date.valueOf(client.getNaissance()));
+
 
 			ps.execute();
 			ResultSet resultSet = ps.getGeneratedKeys();

@@ -7,7 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.epf.rentmanager.model.Client;
@@ -226,4 +229,58 @@ public class ReservationDao {
 			throw new DaoException("Erreur lors de la mise à jour de la réservation dans le DAO",e);
 		}
 	}
+
+	public boolean isReservationAvailable(LocalDate startDate, LocalDate endDate, Long vehicleId) throws DaoException {
+		List<Reservation> allReservations = findAll();
+		for (Reservation existingReservation : allReservations) {
+			if (existingReservation.getVehicle_id() == vehicleId
+					&& (!existingReservation.getDebut().isAfter(endDate) && !existingReservation.getFin().isBefore(startDate))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	public boolean isReservationDurationValid(LocalDate startDate, LocalDate endDate, List<Reservation> clientReservations) throws DaoException {
+		long totalDays = 0;
+		for (Reservation reservation : clientReservations) {
+			//System.out.println("check avec resa : "+reservation.getId()+" De"+reservation.getDebut()+" A "+reservation.getFin());
+			if (endDate.equals(reservation.getDebut().minusDays(1)) || startDate.equals(reservation.getFin().plusDays(1))) {
+				//System.out.println("oui + "+ ChronoUnit.DAYS.between(reservation.getDebut(), reservation.getFin()) );
+				totalDays += ChronoUnit.DAYS.between(reservation.getDebut(), reservation.getFin()) +1 ;
+			}
+		}
+		long newReservationDays = ChronoUnit.DAYS.between(startDate, endDate);
+		return totalDays + newReservationDays <= 7;
+	}
+
+	public boolean isReservationDurationVehicleValid(LocalDate startDate, LocalDate endDate, List<Reservation> vehicleReservations) throws DaoException {
+		Collections.sort(vehicleReservations, Comparator.comparing(Reservation::getDebut));
+
+		long totalDays = 0;
+		long newReservationDays = ChronoUnit.DAYS.between(startDate, endDate);
+
+		for (int i = 0; i < vehicleReservations.size(); i++) {
+			Reservation currentReservation = vehicleReservations.get(i);
+
+			if (i > 0) {
+				LocalDate previousReservationEndDate = vehicleReservations.get(i - 1).getFin();
+				if (!startDate.equals(previousReservationEndDate.plusDays(1))) {
+					if (totalDays > 30) {
+						return false;
+					}
+				}
+			}
+
+			totalDays += ChronoUnit.DAYS.between(currentReservation.getDebut(), currentReservation.getFin()) + 1;
+			System.out.println(" : "+totalDays);
+		}
+
+		totalDays += newReservationDays;
+
+		return totalDays <= 30;
+	}
+
+
 }

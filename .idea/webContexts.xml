@@ -4,6 +4,8 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/rents/edit.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/rents" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/rents/list.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/rents" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/users/list.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/users" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/vehicles/create.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/vehicles" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/vehicles/details.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/vehicles" />
       </map>
