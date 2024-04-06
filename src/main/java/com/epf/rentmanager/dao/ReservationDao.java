@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -230,8 +232,7 @@ public class ReservationDao {
 		}
 	}
 
-	public boolean isReservationAvailable(LocalDate startDate, LocalDate endDate, Long vehicleId) throws DaoException {
-		List<Reservation> allReservations = findAll();
+	public boolean isReservationAvailable(LocalDate startDate, LocalDate endDate, Long vehicleId,List<Reservation> allReservations ) throws DaoException {
 		for (Reservation existingReservation : allReservations) {
 			if (existingReservation.getVehicle_id() == vehicleId
 					&& (!existingReservation.getDebut().isAfter(endDate) && !existingReservation.getFin().isBefore(startDate))) {
@@ -280,6 +281,37 @@ public class ReservationDao {
 		totalDays += newReservationDays;
 
 		return totalDays <= 30;
+	}
+
+	public boolean isReservationDateValid (LocalDate StartDate, LocalDate EndDate){
+		if(EndDate.isAfter(StartDate)){
+			System.out.println("fin apres");
+			return true;
+		}
+		System.out.println("fin avant!!");
+		return false;
+	}
+
+	public boolean isReservationStartDateFormatValid (String StartDate){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		try {
+			LocalDate.parse(StartDate, formatter);
+			return true;
+		} catch (DateTimeParseException e) {
+			return false;
+		}
+	}
+
+	public boolean isReservationEndDateFormatValid ( String EndDate){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		try {
+			LocalDate.parse(EndDate, formatter);
+			return true;
+		} catch (DateTimeParseException e) {
+			return false;
+		}
 	}
 
 

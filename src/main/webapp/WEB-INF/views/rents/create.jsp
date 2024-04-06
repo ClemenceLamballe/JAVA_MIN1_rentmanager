@@ -55,6 +55,12 @@
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="start_date" name="start_date" required
                                                data-inputmask="'alias': 'dd/MM/yyyy'" data-mask>
+                                        <c:if test="${not empty requestScope.errorMessageStartDateFormat}">
+                                            <div class="text-danger">${requestScope.errorMessageStartDateFormat}</div>
+                                        </c:if>
+                                        <c:if test="${not empty requestScope.errorMessageDateValid}">
+                                            <div class="text-danger">${requestScope.errorMessageDateValid}</div>
+                                        </c:if>
                                         <c:if test="${not empty requestScope.StartDateErrorMessage}">
                                             <div class="text-danger">${requestScope.StartDateErrorMessage}</div>
                                         </c:if>
@@ -73,6 +79,9 @@
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="end_date" name="end_date" required
                                                data-inputmask="'alias': 'dd/MM/yyyy'" data-mask>
+                                        <c:if test="${not empty requestScope.errorMessageEndDateFormat}">
+                                            <div class="text-danger">${requestScope.errorMessageEndDateFormat}</div>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>

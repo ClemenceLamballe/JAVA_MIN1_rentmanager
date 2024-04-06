@@ -5,6 +5,8 @@ import com.epf.rentmanager.model.Reservation;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class ReservationService {
@@ -18,76 +20,51 @@ public class ReservationService {
 
     public long create(Reservation reservation) throws ServiceException, DaoException {
         List<Reservation> allReservations = reservationDao.findAll();
-        LocalDate debut = reservation.getDebut();
-        LocalDate fin = reservation.getFin();
 
         LocalDate startDate = reservation.getDebut();
         LocalDate endDate = reservation.getFin();
         Long vehicleId = reservation.getVehicle_id();
+        Long clientId = reservation.getClient_id();
 
-        if (!reservationDao.isReservationAvailable(startDate, endDate, vehicleId)) {
+        List<Reservation> clientReservations = reservationDao.findResaByClientId(clientId);
+        List<Reservation> vehicleReservations = new ArrayList<>();
+        for (Reservation reservationc : clientReservations) {
+            if (reservationc.getVehicle_id() == vehicleId) {
+                vehicleReservations.add(reservationc);
+            }
+        }
+        List<Reservation> allReservationsvehhicle = reservationDao.findResaByVehicleId(vehicleId);
+
+
+        if (!reservationDao.isReservationAvailable(startDate, endDate, vehicleId,allReservations)) {
             throw new ServiceException("Cette voiture est déjà réservée pour cette période.");
         }
 
-        /*// Vérification : une voiture ne peut pas être réservée 2 fois le même jour
-        boolean alreadyReservedSameDay = false;
-        for (Reservation existingReservation : allReservations) {
-            LocalDate existingDebut = existingReservation.getDebut();
-            LocalDate existingFin = existingReservation.getFin();
-            if (existingReservation.getVehicle_id() == reservation.getVehicle_id()
-                    && (existingDebut.isEqual(debut) || existingFin.isEqual(fin))) {
-                alreadyReservedSameDay = true;
-                break;
-            }
-        }
-        if (alreadyReservedSameDay) {
-            throw new ServiceException("Cette voiture est déjà réservée pour cette date.");
+        if (!reservationDao.isReservationDurationValid(startDate, endDate, vehicleReservations)) {
+            throw new ServiceException("Vous ne pouvez pas réserver cette voiture plus de 7 jours de suite.");
         }
 
-        // Vérification : une voiture ne peut pas être réservée plus de 7 jours de suite par le même utilisateur
-        int maxConsecutiveDays = 7;
-        int consecutiveDays = 1;
-        for (int i = 1; i < allReservations.size(); i++) {
-            Reservation current = allReservations.get(i);
-            Reservation previous = allReservations.get(i - 1);
-
-            if (current.getVehicle_id() == reservation.getVehicle_id()
-                    && current.getClient_id() == reservation.getClient_id()
-                    && current.getDebut().minusDays(1).isEqual(previous.getFin())) {
-                consecutiveDays++;
-                if (consecutiveDays > maxConsecutiveDays) {
-                    throw new ServiceException("Vous ne pouvez pas réserver cette voiture plus de 7 jours de suite.");
-                }
-            } else {
-                consecutiveDays = 1;
-            }
+        if (!reservationDao.isReservationDurationVehicleValid(startDate, endDate, allReservationsvehhicle)) {
+            throw new ServiceException("Vous ne pouvez pas réserver cette voiture car elle atteindra 30 jours de suite.");
         }
 
-        // Vérification : une voiture ne peut pas être réservée 30 jours de suite sans pause
-        int maxDaysWithoutPause = 30;
-        int daysWithoutPause = 0;
-        for (LocalDate date = debut; date.isBefore(fin.plusDays(1)); date = date.plusDays(1)) {
-            boolean reserved = false;
-            for (Reservation existingReservation : allReservations) {
-                LocalDate existingDebut = existingReservation.getDebut();
-                LocalDate existingFin = existingReservation.getFin();
-                if (existingReservation.getVehicle_id() == reservation.getVehicle_id()
-                        && existingDebut.isBefore(date) && existingFin.isAfter(date)) {
-                    reserved = true;
-                    break;
-                }
-            }
-            if (reserved) {
-                daysWithoutPause = 0;
-            } else {
-                daysWithoutPause++;
-                if (daysWithoutPause > maxDaysWithoutPause) {
-                    throw new ServiceException("Vous ne pouvez pas réserver cette voiture plus de 30 jours de suite sans pause.");
-                }
-            }
-        }*/
+        if (!reservationDao.isReservationDateValid(startDate, endDate)) {
+            throw new ServiceException("La date de début doit être antiérieur à celle de fin.");
+        }
 
-        return reservationDao.create(reservation);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedEndDate = endDate.format(formatter);
+        String formattedStartDate = startDate.format(formatter);
+
+        if (!reservationDao.isReservationEndDateFormatValid(formattedStartDate)) {
+            throw new ServiceException("Format de date invalide pour la date de début.");
+        }
+
+        if (!reservationDao.isReservationEndDateFormatValid(formattedEndDate)) {
+            throw new ServiceException("Format de date invalide pour la date de fin.");
+        }
+
+            return reservationDao.create(reservation);
     }
 
     public void delete(long reservationId) throws ServiceException, DaoException {
@@ -132,17 +109,59 @@ public class ReservationService {
 
     public void update(Reservation reservation) throws ServiceException {
         try {
-            //if (reservation.getDebut().isAfter(reservation.getFin())) {
-              //  throw new ServiceException("La date de début ne peut pas être après la date de fin.");
-            //}
+            List<Reservation> allReservations = reservationDao.findAll();
+
+            LocalDate startDate = reservation.getDebut();
+            LocalDate endDate = reservation.getFin();
+            Long vehicleId = reservation.getVehicle_id();
+            Long clientId = reservation.getClient_id();
+            List<Reservation> clientReservations = reservationDao.findResaByClientId(clientId);
+            List<Reservation> vehicleReservations = new ArrayList<>();
+            for (Reservation reservationc : clientReservations) {
+                if (reservationc.getVehicle_id() == vehicleId) {
+                    vehicleReservations.add(reservationc);
+                }
+            }
+            List<Reservation> allReservationsvehhicle = reservationDao.findResaByVehicleId(vehicleId);
+
+
+            if (!reservationDao.isReservationAvailable(startDate, endDate, vehicleId,allReservations)) {
+                throw new ServiceException("Cette voiture est déjà réservée pour cette période.");
+            }
+
+            if (!reservationDao.isReservationDurationValid(startDate, endDate, vehicleReservations)) {
+                throw new ServiceException("Vous ne pouvez pas réserver cette voiture plus de 7 jours de suite.");
+            }
+
+            if (!reservationDao.isReservationDurationVehicleValid(startDate, endDate, allReservationsvehhicle)) {
+                throw new ServiceException("Vous ne pouvez pas réserver cette voiture car elle atteindra 30 jours de suite.");
+            }
+
+            if (!reservationDao.isReservationDateValid(startDate, endDate)) {
+                throw new ServiceException("La date de début doit être antiérieur à celle de fin.");
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedEndDate = endDate.format(formatter);
+            String formattedStartDate = startDate.format(formatter);
+
+
+            if (!reservationDao.isReservationEndDateFormatValid(formattedEndDate)) {
+                throw new ServiceException("Format de date de fin invalide.");
+            }
+
+            if (!reservationDao.isReservationEndDateFormatValid(formattedStartDate)) {
+                throw new ServiceException("Format de date de début invalide.");
+            }
+
             reservationDao.update(reservation);
         } catch (DaoException e) {
             throw new ServiceException("Erreur lors de la mise à jour de la réservation dans le Service");
         }
     }
 
-    public boolean isReservationAvailable(LocalDate startDate, LocalDate endDate, Long vehicleId) throws DaoException {
-        return reservationDao.isReservationAvailable(startDate, endDate, vehicleId);
+    public boolean isReservationAvailable(LocalDate startDate, LocalDate endDate, Long vehicleId, List<Reservation> allReservations) throws DaoException {
+        return reservationDao.isReservationAvailable(startDate, endDate, vehicleId,allReservations);
     }
 
     public boolean isReservationDurationValid(LocalDate startDate, LocalDate endDate, List<Reservation> vehicleReservations) throws DaoException {
@@ -153,4 +172,15 @@ public class ReservationService {
         return reservationDao.isReservationDurationVehicleValid(startDate, endDate, Reservations);
     }
 
+    public boolean isReservationDateValid (LocalDate startDate, LocalDate endDate){
+        return reservationDao.isReservationDateValid(startDate, endDate);
+    }
+
+    public boolean isReservationStartDateFormatValid (String StartDate){
+        return reservationDao.isReservationStartDateFormatValid(StartDate);
+    }
+
+    public boolean isReservationEndDateFormatValid (String EndDate){
+        return reservationDao.isReservationEndDateFormatValid(EndDate);
+    }
 }

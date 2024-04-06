@@ -7,6 +7,7 @@ com\epf\rentmanager\ui\cli\CreateClientCommand.class
 com\epf\rentmanager\servlet\Vehicle\VehicleDeleteServlet.class
 com\epf\rentmanager\ui\cli\Interface.class
 com\epf\rentmanager\ui\cli\ListVehicleCommand.class
+com\epf\rentmanager\dao\ReservationDao.class
 com\epf\rentmanager\servlet\Vehicle\VehicleDetailsServlet.class
 com\epf\rentmanager\servlet\client\ClientDeleteServlet.class
 com\epf\rentmanager\servlet\HomeServlet.class
@@ -17,6 +18,7 @@ com\epf\rentmanager\ui\cli\DeleteVehicleCommand.class
 com\epf\rentmanager\ui\cli\DeleteReservationCommand.class
 com\epf\rentmanager\ui\cli\ListReservationsByClientCommand.class
 com\epf\rentmanager\ui\cli\DeleteClientCommand.class
+com\epf\rentmanager\service\ReservationService.class
 com\epf\rentmanager\utils\IOUtils.class
 com\epf\rentmanager\servlet\Reservation\ReservationListServlet.class
 com\epf\rentmanager\ui\cli\ListClientsCommand.class
