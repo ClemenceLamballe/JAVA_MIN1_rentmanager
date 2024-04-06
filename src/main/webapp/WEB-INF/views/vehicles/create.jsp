@@ -34,11 +34,8 @@
                                 <div class="form-group">
                                     <label for="constructeur" class="col-sm-2 control-label">Marque</label>
 
-									<!-- Pour r�up�rer la valeur rentr�e dans un champ input de cette jsp au niveau de votre servlet -->
-									<!-- vous devez passer par les methodes getParameter de l'objet request, est sp�cifiant la valeur -->
-									<!-- de l'attribut "name" de l'input -->
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="constructeur" name="constructeur" placeholder="Marque" required>
+                                        <input type="text" class="form-control" id="constructeur" name="constructeur" placeholder="Marque" value="${constructeur}" required>
                                         <c:if test="${not empty requestScope.VehicleConstructeurErrorMessage}">
                                             <span class="text-danger">${requestScope.VehicleConstructeurErrorMessage}</span>
                                         </c:if>
@@ -48,7 +45,7 @@
                                     <label for="modele" class="col-sm-2 control-label">Modele</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="modele" name="modele" placeholder="Modele" required>
+                                        <input type="text" class="form-control" id="modele" name="modele" placeholder="Modele" value="${modele}"required>
                                         <c:if test="${not empty requestScope.VehicleModeleErrorMessage}">
                                             <span class="text-danger">${requestScope.VehicleModeleErrorMessage}</span>
                                         </c:if>
@@ -58,7 +55,7 @@
                                     <label for="nb_places" class="col-sm-2 control-label">Nombre de places</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nb_places" name="nb_places" placeholder="Nombre de places" required>
+                                        <input type="text" class="form-control" id="nb_places" name="nb_places" placeholder="Nombre de places" value="${nbPlaces}"required>
                                         <c:if test="${not empty requestScope.VehicleNbPlacesErrorMessage}">
                                             <span class="text-danger">${requestScope.VehicleNbPlacesErrorMessage}</span>
                                         </c:if>

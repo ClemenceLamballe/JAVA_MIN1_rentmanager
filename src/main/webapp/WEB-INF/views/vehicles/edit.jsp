@@ -36,6 +36,9 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="constructeur" name="constructeur" placeholder="Marque" value="${vehicle.constructeur}" required>
+                                        <c:if test="${not empty requestScope.VehicleConstructeurErrorMessage}">
+                                            <span class="text-danger">${requestScope.VehicleConstructeurErrorMessage}</span>
+                                        </c:if>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -43,6 +46,9 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="modele" name="modele" placeholder="Modele" value="${vehicle.modele}" required>
+                                        <c:if test="${not empty requestScope.VehicleModeleErrorMessage}">
+                                            <span class="text-danger">${requestScope.VehicleModeleErrorMessage}</span>
+                                        </c:if>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -50,6 +56,9 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="nb_places" name="nb_places" placeholder="Nombre de places" value="${vehicle.nb_places}" required>
+                                        <c:if test="${not empty requestScope.VehicleNbPlacesErrorMessage}">
+                                            <span class="text-danger">${requestScope.VehicleNbPlacesErrorMessage}</span>
+                                        </c:if>
                                     </div>
                                 </div>
 

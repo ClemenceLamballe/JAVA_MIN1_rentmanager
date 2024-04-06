@@ -40,7 +40,8 @@ public class VehicleCreateServlet extends HttpServlet {
 
             String constructeur = request.getParameter("constructeur");
             String modele = request.getParameter("modele");
-            int nbPlaces = Integer.parseInt(request.getParameter("nb_places"));
+            String nbPlacesString = request.getParameter("nb_places");
+
 
             if (constructeur.isEmpty()) {
                 request.setAttribute("VehicleConstructeurErrorMessage", "Le constructeur du véhicule est requis.");
@@ -48,11 +49,29 @@ public class VehicleCreateServlet extends HttpServlet {
             if (modele.isEmpty()) {
                 request.setAttribute("VehicleModeleErrorMessage", "Le modèle du véhicule est requis.");
             }
+
+
+            if (!nbPlacesString.matches("\\d+")) {
+                request.setAttribute("VehicleNbPlacesErrorMessage", "Le nombre de places du véhicule doit être un chiffre.");
+                request.setAttribute("constructeur", constructeur);
+                request.setAttribute("modele", modele);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            int nbPlaces = Integer.parseInt(request.getParameter("nb_places"));
+
+
             if (nbPlaces < 2 || nbPlaces > 9) {
                 request.setAttribute("VehicleNbPlacesErrorMessage", "Le nombre de places du véhicule doit être compris entre 2 et 9.");
             }
 
             if (constructeur.isEmpty() || modele.isEmpty() || nbPlaces < 2 || nbPlaces > 9) {
+                request.setAttribute("constructeur", constructeur);
+                request.setAttribute("modele", modele);
+                request.setAttribute("nbPlaces", nbPlaces);
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp");
                 dispatcher.forward(request, response);
                 return;
