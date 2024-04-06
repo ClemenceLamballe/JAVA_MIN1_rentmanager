@@ -15,7 +15,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Utilisateurs
+                Créer un utilisateur
             </h1>
         </section>
 
@@ -32,7 +32,7 @@
                                     <label for="last_name" class="col-sm-2 control-label">Nom</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
+                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom" value="${lastName}" required>
                                         <% if (request.getAttribute("LastNameErrorMessage") != null) { %>
                                         <span class="text-danger"><%= request.getAttribute("LastNameErrorMessage") %></span>
                                         <% } %>
@@ -42,7 +42,7 @@
                                     <label for="first_name" class="col-sm-2 control-label">Prenom</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prenom">
+                                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prenom" value="${firstName}" required>
                                         <% if (request.getAttribute("NameErrorMessage") != null) { %>
                                         <span class="text-danger"><%= request.getAttribute("NameErrorMessage") %></span>
                                         <% } %>
@@ -52,7 +52,7 @@
                                     <label for="email" class="col-sm-2 control-label">Email</label>
 
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="${email}" required>
                                         <% if (request.getAttribute("EmailErrorMessage") != null) { %>
                                         <span class="text-danger"><%= request.getAttribute("EmailErrorMessage") %></span>
                                         <% } %>
@@ -63,7 +63,7 @@
                                     <label for="birthdate" class="col-sm-2 control-label">Birthdate</label>
 
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Birthdate">
+                                        <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Birthdate" value="${birthdate}" required>
                                         <% if (request.getAttribute("BirthdateErrorMessage") != null) { %>
                                         <span class="text-danger"><%= request.getAttribute("BirthdateErrorMessage") %></span>
                                         <% } %>

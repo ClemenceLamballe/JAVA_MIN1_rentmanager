@@ -55,7 +55,7 @@
                                     <label for="nb_places" class="col-sm-2 control-label">Nombre de places</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nb_places" name="nb_places" placeholder="Nombre de places" value="${nbPlaces}"required>
+                                        <input type="text" class="form-control" id="nb_places" name="nb_places" placeholder="Nombre de places" value="${nbPlaces}" required>
                                         <c:if test="${not empty requestScope.VehicleNbPlacesErrorMessage}">
                                             <span class="text-danger">${requestScope.VehicleNbPlacesErrorMessage}</span>
                                         </c:if>

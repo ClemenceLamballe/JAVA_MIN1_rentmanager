@@ -32,6 +32,9 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom" value="${client.nom}">
+                                        <% if (request.getAttribute("LastNameErrorMessage") != null) { %>
+                                        <span class="text-danger"><%= request.getAttribute("LastNameErrorMessage") %></span>
+                                        <% } %>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -39,6 +42,9 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prenom" value="${client.prenom}">
+                                        <% if (request.getAttribute("NameErrorMessage") != null) { %>
+                                        <span class="text-danger"><%= request.getAttribute("NameErrorMessage") %></span>
+                                        <% } %>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -46,6 +52,9 @@
 
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="${client.email}">
+                                        <% if (request.getAttribute("EmailErrorMessage") != null) { %>
+                                        <span class="text-danger"><%= request.getAttribute("EmailErrorMessage") %></span>
+                                        <% } %>
                                     </div>
                                 </div>
 
@@ -54,6 +63,9 @@
 
                                     <div class="col-sm-10">
                                         <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Birthdate" value="${client.naissance}">
+                                        <% if (request.getAttribute("BirthdateErrorMessage") != null) { %>
+                                        <span class="text-danger"><%= request.getAttribute("BirthdateErrorMessage") %></span>
+                                        <% } %>
                                     </div>
                                 </div>
                             </div>
