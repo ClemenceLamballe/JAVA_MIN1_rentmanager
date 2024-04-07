@@ -1,12 +1,9 @@
 package com.epf.rentmanager.model;
 import java.time.LocalDate;
 public class Reservation {
-
-  //  + INT id PRIMARY KEY
-  //  AUTOINCREMENT
     private long client_id;
     private long vehicle_id;
-    private LocalDate  debut;
+    private LocalDate debut;
     private LocalDate fin;
 
     private long id;

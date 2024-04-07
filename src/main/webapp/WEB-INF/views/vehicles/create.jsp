@@ -32,27 +32,33 @@
                         <form class="form-horizontal" method="post">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="manufacturer" class="col-sm-2 control-label">Marque</label>
+                                    <label for="constructeur" class="col-sm-2 control-label">Marque</label>
 
-									<!-- Pour r�up�rer la valeur rentr�e dans un champ input de cette jsp au niveau de votre servlet -->
-									<!-- vous devez passer par les methodes getParameter de l'objet request, est sp�cifiant la valeur -->
-									<!-- de l'attribut "name" de l'input -->
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="Marque" required>
+                                        <input type="text" class="form-control" id="constructeur" name="constructeur" placeholder="Marque" value="${constructeur}" required>
+                                        <c:if test="${not empty requestScope.VehicleConstructeurErrorMessage}">
+                                            <span class="text-danger">${requestScope.VehicleConstructeurErrorMessage}</span>
+                                        </c:if>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="modele" class="col-sm-2 control-label">Modele</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="modele" name="modele" placeholder="Modele" required>
+                                        <input type="text" class="form-control" id="modele" name="modele" placeholder="Modele" value="${modele}"required>
+                                        <c:if test="${not empty requestScope.VehicleModeleErrorMessage}">
+                                            <span class="text-danger">${requestScope.VehicleModeleErrorMessage}</span>
+                                        </c:if>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="seats" class="col-sm-2 control-label">Nombre de places</label>
+                                    <label for="nb_places" class="col-sm-2 control-label">Nombre de places</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="seats" name="seats" placeholder="Nombre de places" required>
+                                        <input type="text" class="form-control" id="nb_places" name="nb_places" placeholder="Nombre de places" value="${nbPlaces}" required>
+                                        <c:if test="${not empty requestScope.VehicleNbPlacesErrorMessage}">
+                                            <span class="text-danger">${requestScope.VehicleNbPlacesErrorMessage}</span>
+                                        </c:if>
                                     </div>
                                 </div>
                                 <!--
@@ -70,7 +76,9 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+                                <button type="submit" class="btn btn-info pull-right" >Ajouter</button>
+
+
                             </div>
                             <!-- /.box-footer -->
                         </form>

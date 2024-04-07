@@ -1,19 +1,18 @@
 package com.epf.rentmanager.model;
+
+
 import java.time.LocalDate;
+
 public class Client {
-    //attributs
-// AUTOINCREMENT???
+
     private String nom;
     private String prenom;
     private String email;
     private LocalDate naissance;
-    private long id;//PRIMARY KEY
-    //constructeur vide
+    private long id;
     public Client() {
-        //valeurs par défaut?
     }
 
-    // Constructeur avec paramètres
     public Client(long id, String nom, String prenom, String email, LocalDate naissance) {
         this.id = id;
         this.nom = nom;
@@ -21,8 +20,6 @@ public class Client {
         this.email = email;
         this.naissance = naissance;
     }
-
-    //méthodes
 
     public String getNom() {
         return nom;

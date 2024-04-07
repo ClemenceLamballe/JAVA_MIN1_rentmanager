@@ -1,5 +1,6 @@
 package com.epf.rentmanager.dao;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -7,23 +8,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.persistence.ConnectionManager;
+import com.epf.rentmanager.service.ServiceException;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ReservationDao {
 
 	private static ReservationDao instance = null;
 	private ReservationDao() {}
-	public static ReservationDao getInstance() {
-		if(instance == null) {
-			instance = new ReservationDao();
-		}
-		return instance;
-	}
+
 	
 	private static final String CREATE_RESERVATION_QUERY = "INSERT INTO Reservation(client_id, vehicle_id, debut, fin) VALUES(?, ?, ?, ?);";
 	private static final String DELETE_RESERVATION_QUERY = "DELETE FROM Reservation WHERE id=?;";
@@ -31,7 +36,13 @@ public class ReservationDao {
 	private static final String FIND_RESERVATIONS_BY_VEHICLE_QUERY = "SELECT id, client_id, debut, fin FROM Reservation WHERE vehicle_id=?;";
 	private static final String FIND_RESERVATIONS_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation;";
 	private static final String FIND_RESERVATION_BY_ID_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation WHERE id=?;";
-		
+	private static final String UPDATE_RESERVATION_QUERY = "UPDATE Reservation SET vehicle_id=?, client_id=?, debut=?, fin=? WHERE id=?;";
+
+	/**
+	 * @param reservation
+	 * @return
+	 * @throws DaoException
+	 */
 	public long create(Reservation reservation) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -59,11 +70,16 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur lors de la création d'une réservation",e);
 		}
 		return -1;
 	}
-	
+
+	/**
+	 * @param reservation
+	 * @return
+	 * @throws DaoException
+	 */
 	public long delete(Reservation reservation) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -76,13 +92,18 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur lors de la suppression d'une réservation",e);
 		}
 
 		return 0;
 	}
 
-	
+
+	/**
+	 * @param clientId
+	 * @return
+	 * @throws DaoException
+	 */
 	public List<Reservation> findResaByClientId(long clientId) throws DaoException {
 		List<Reservation> reservations = new ArrayList<>();
 		try {
@@ -92,7 +113,7 @@ public class ReservationDao {
 
 			ResultSet resultSet = ps.executeQuery();
 
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				Long vehicleID= resultSet.getLong("vehicle_id");
 				LocalDate Debut = resultSet.getDate("debut").toLocalDate();
 				LocalDate Fin = resultSet.getDate("fin").toLocalDate();
@@ -100,17 +121,22 @@ public class ReservationDao {
 
 				Reservation reservation = new Reservation(id, clientId,  vehicleID,  Debut, Fin);
 				reservations.add(reservation);
-				return reservations;
+
 			}
 
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour trouver la réservation",e);
 		}
-		return null;
+		return reservations;
 	}
-	
+
+	/**
+	 * @param vehicleId
+	 * @return
+	 * @throws DaoException
+	 */
 	public List<Reservation> findResaByVehicleId(long vehicleId) throws DaoException {
 		List<Reservation> reservations = new ArrayList<>();
 		try {
@@ -133,11 +159,15 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour trouver la réservation",e);
 		}
 		return reservations;
 	}
 
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
 	public List<Reservation> findAll() throws DaoException {
 		List<Reservation> reservations = new ArrayList<>();
 		try {
@@ -159,11 +189,16 @@ public class ReservationDao {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour trouver les réservations",e);
 		}
 		return reservations;
 	}
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public Reservation findById(long id) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -183,8 +218,59 @@ public class ReservationDao {
 			ps.close();
 			connection.close();
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Erreur pour trouver la réservation",e);
 		}
 		return null;
 	}
+
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
+	public int countReservation() throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM reservation");
+			 ResultSet resultSet = statement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			throw new DaoException("Erreur pour compter les réservations",e);
+		}
+
+		return -1;
+	}
+
+	/**
+	 * @param reservation
+	 * @throws DaoException
+	 */
+	public void update(Reservation reservation) throws DaoException {
+		try {
+
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement ps = connection.prepareStatement(UPDATE_RESERVATION_QUERY);
+			ps.setLong(1, reservation.getVehicle_id());
+
+			ps.setLong(2, reservation.getClient_id());
+
+			ps.setDate(3, Date.valueOf(reservation.getDebut()));
+
+			ps.setDate(4, Date.valueOf(reservation.getFin()));
+
+			ps.setLong(5, reservation.getId());
+
+			ps.executeUpdate();
+
+			ps.close();
+			connection.close();
+		} catch (SQLException e) {
+			throw new DaoException("Erreur lors de la mise à jour de la réservation dans le DAO",e);
+		}
+	}
+
+
 }
+
