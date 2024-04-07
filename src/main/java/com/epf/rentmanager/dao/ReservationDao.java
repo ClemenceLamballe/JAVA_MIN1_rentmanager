@@ -38,6 +38,11 @@ public class ReservationDao {
 	private static final String FIND_RESERVATION_BY_ID_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation WHERE id=?;";
 	private static final String UPDATE_RESERVATION_QUERY = "UPDATE Reservation SET vehicle_id=?, client_id=?, debut=?, fin=? WHERE id=?;";
 
+	/**
+	 * @param reservation
+	 * @return
+	 * @throws DaoException
+	 */
 	public long create(Reservation reservation) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -69,7 +74,12 @@ public class ReservationDao {
 		}
 		return -1;
 	}
-	
+
+	/**
+	 * @param reservation
+	 * @return
+	 * @throws DaoException
+	 */
 	public long delete(Reservation reservation) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -88,7 +98,12 @@ public class ReservationDao {
 		return 0;
 	}
 
-	
+
+	/**
+	 * @param clientId
+	 * @return
+	 * @throws DaoException
+	 */
 	public List<Reservation> findResaByClientId(long clientId) throws DaoException {
 		List<Reservation> reservations = new ArrayList<>();
 		try {
@@ -116,7 +131,12 @@ public class ReservationDao {
 		}
 		return reservations;
 	}
-	
+
+	/**
+	 * @param vehicleId
+	 * @return
+	 * @throws DaoException
+	 */
 	public List<Reservation> findResaByVehicleId(long vehicleId) throws DaoException {
 		List<Reservation> reservations = new ArrayList<>();
 		try {
@@ -144,6 +164,10 @@ public class ReservationDao {
 		return reservations;
 	}
 
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
 	public List<Reservation> findAll() throws DaoException {
 		List<Reservation> reservations = new ArrayList<>();
 		try {
@@ -170,6 +194,11 @@ public class ReservationDao {
 		return reservations;
 	}
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public Reservation findById(long id) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -194,6 +223,10 @@ public class ReservationDao {
 		return null;
 	}
 
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
 	public int countReservation() throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM reservation");
@@ -209,6 +242,11 @@ public class ReservationDao {
 
 		return -1;
 	}
+
+	/**
+	 * @param reservation
+	 * @throws DaoException
+	 */
 	public void update(Reservation reservation) throws DaoException {
 		try {
 
@@ -233,102 +271,6 @@ public class ReservationDao {
 		}
 	}
 
-	public boolean isReservationAvailable(LocalDate startDate, LocalDate endDate, Long vehicleId,List<Reservation> allReservations ) throws DaoException {
-		try {
-
-			for (Reservation existingReservation : allReservations) {
-				if (existingReservation.getVehicle_id() == vehicleId
-						&& (!existingReservation.getDebut().isAfter(endDate) && !existingReservation.getFin().isBefore(startDate))) {
-					return false;
-				}
-			}
-			return true;
-		}catch (Exception e){
-			throw new DaoException("Erreur pour vérifier la validité de la réservation",e);
-        }
-
-
-	}
-
-
-	public boolean isReservationDurationValid(LocalDate startDate, LocalDate endDate, List<Reservation> clientReservations) throws DaoException {
-		long totalDays = 0;
-		for (Reservation reservation : clientReservations) {
-			//System.out.println("check avec resa : "+reservation.getId()+" De"+reservation.getDebut()+" A "+reservation.getFin());
-			if (endDate.equals(reservation.getDebut().minusDays(1)) || startDate.equals(reservation.getFin().plusDays(1))) {
-				//System.out.println("oui + "+ ChronoUnit.DAYS.between(reservation.getDebut(), reservation.getFin()) );
-				totalDays += ChronoUnit.DAYS.between(reservation.getDebut(), reservation.getFin()) +1 ;
-			}
-		}
-		long newReservationDays = ChronoUnit.DAYS.between(startDate, endDate);
-		return totalDays + newReservationDays <= 7;
-	}
-
-	public boolean isReservationDurationVehicleValid(LocalDate startDate, LocalDate endDate, List<Reservation> vehicleReservations) throws DaoException {
-		Collections.sort(vehicleReservations, Comparator.comparing(Reservation::getDebut));
-
-		long totalDays = 0;
-		long newReservationDays = ChronoUnit.DAYS.between(startDate, endDate);
-
-		for (int i = 0; i < vehicleReservations.size(); i++) {
-			Reservation currentReservation = vehicleReservations.get(i);
-
-			if (i > 0) {
-				LocalDate previousReservationEndDate = vehicleReservations.get(i - 1).getFin();
-				if (!startDate.equals(previousReservationEndDate.plusDays(1))) {
-					if (totalDays > 30) {
-						return false;
-					}
-				}
-			}
-
-			totalDays += ChronoUnit.DAYS.between(currentReservation.getDebut(), currentReservation.getFin()) + 1;
-			System.out.println(" : "+totalDays);
-		}
-
-		totalDays += newReservationDays;
-
-		return totalDays <= 30;
-	}
-
-	public boolean isReservationDateValid (LocalDate StartDate, LocalDate EndDate) throws DaoException {
-		try {
-			System.out.println("hello dao");//rien ne s'affiche
-			if(EndDate.isAfter(StartDate)){
-				return true;
-			}
-			return false;
-		}catch (Exception e) {
-			throw new DaoException("Erreur lors de la validation des dates de réservation dans le DAO", e);
-		}
-
-	}
-
-	public boolean isReservationStartDateFormatValid (String StartDate) throws DaoException {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-		try {
-			LocalDate.parse(StartDate, formatter);
-			return true;
-		} catch (DateTimeParseException e) {
-			return false;
-		}catch (Exception e) {
-			throw new DaoException("Erreur lors de la validation du format de la date de début de réservation dans le DAO", e);
-		}
-	}
-
-	public boolean isReservationEndDateFormatValid ( String EndDate) throws DaoException {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-		try {
-			LocalDate.parse(EndDate, formatter);
-			return true;
-		} catch (DateTimeParseException e) {
-			return false;
-		}catch (Exception e) {
-			throw new DaoException("Erreur lors de la validation du format de la date de fin de réservation dans le DAO", e);
-		}
-	}
-
 
 }
+

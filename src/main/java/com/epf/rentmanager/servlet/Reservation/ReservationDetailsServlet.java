@@ -30,12 +30,21 @@ public class ReservationDetailsServlet extends HttpServlet {
     @Autowired
     VehicleService vehicleService;
 
+    /**
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         long reservationId = Long.parseLong(request.getParameter("id"));

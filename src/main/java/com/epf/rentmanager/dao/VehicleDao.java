@@ -25,6 +25,11 @@ public class VehicleDao {
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, modele, nb_places FROM Vehicle;";
 	private static final String UPDATE_VEHICLE_QUERY = "UPDATE Vehicle SET constructeur=?, modele=?, nb_places=? WHERE id=?;";
 
+	/**
+	 * @param vehicle
+	 * @return
+	 * @throws DaoException
+	 */
 	public long create(Vehicle vehicle) throws DaoException {
 		try {
 
@@ -44,7 +49,6 @@ public class VehicleDao {
 			ResultSet resultSet = ps.getGeneratedKeys();
 
 			if (resultSet.next()){
-				//int id = resultSet.getInt(1);
 				long id = resultSet.getLong(1);
 
 				vehicle.setId(id);
@@ -60,6 +64,11 @@ public class VehicleDao {
 		return -1;
 	}
 
+	/**
+	 * @param vehicle
+	 * @return
+	 * @throws DaoException
+	 */
 	public long delete(Vehicle vehicle) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -83,6 +92,11 @@ public class VehicleDao {
 		return 0;
 	}
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public Vehicle findById(long id) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -107,6 +121,10 @@ public class VehicleDao {
 
 	}
 
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findAll() throws DaoException {
 
 		List<Vehicle> vehicles = new ArrayList<>();
@@ -136,6 +154,10 @@ public class VehicleDao {
 		
 	}
 
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
 	public int count() throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM vehicle");
@@ -153,6 +175,10 @@ public class VehicleDao {
 	}
 
 
+	/**
+	 * @param vehicle
+	 * @throws DaoException
+	 */
 	public void update(Vehicle vehicle) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement statement = connection.prepareStatement(UPDATE_VEHICLE_QUERY)) {

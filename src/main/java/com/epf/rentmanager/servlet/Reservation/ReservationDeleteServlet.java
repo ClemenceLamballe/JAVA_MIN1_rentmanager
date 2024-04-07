@@ -19,12 +19,21 @@ public class ReservationDeleteServlet extends HttpServlet {
     @Autowired
     private ReservationService reservationService;
 
+    /**
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {

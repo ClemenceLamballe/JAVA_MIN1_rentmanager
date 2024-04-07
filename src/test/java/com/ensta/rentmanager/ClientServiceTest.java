@@ -34,6 +34,7 @@ public class ClientServiceTest {
     @Mock
     private ClientDao clientDao;
 
+
     @Test
     public void create_should_fail_when_empty_fields() {
         Client clientWithEmptyFields = new Client(1, "", "", "", LocalDate.of(2002, 11, 11));

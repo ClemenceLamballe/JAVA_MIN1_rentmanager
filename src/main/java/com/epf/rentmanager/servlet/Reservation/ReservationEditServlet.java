@@ -37,13 +37,22 @@ public class ReservationEditServlet extends HttpServlet {
     private VehicleService vehicleService;
 
 
-
+    /**
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     * @throws NumberFormatException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NumberFormatException {
         try {
@@ -55,11 +64,15 @@ public class ReservationEditServlet extends HttpServlet {
             List<Client> clients = clientService.findAll();
             List<Vehicle> vehicles = vehicleService.findAll();
 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
             request.setAttribute("clients", clients);
             request.setAttribute("vehicles", vehicles);
-            request.setAttribute("clientresa", client);
-            request.setAttribute("vehicleresa", vehicle);
+            request.setAttribute("clientSelected", client);
+            request.setAttribute("vehicleSelected", vehicle);
             request.setAttribute("reservation", reservation);
+            request.setAttribute("formatter", formatter);
+
             request.getRequestDispatcher("/WEB-INF/views/rents/edit.jsp").forward(request, response);
 
         } catch (ServiceException | DaoException e) {
@@ -67,6 +80,12 @@ public class ReservationEditServlet extends HttpServlet {
         }
         }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -78,17 +97,25 @@ public class ReservationEditServlet extends HttpServlet {
             String endDateString = request.getParameter("end_date");
 
             List<Reservation> allreservations = reservationService.findAll();
+            allreservations.removeIf(r -> r.getId() == reservationId);
+
             List<Reservation> allReservationsvehhicle = reservationService.findReservationsByVehicleId(vehicleId);
+            allReservationsvehhicle.removeIf(r -> r.getId() == reservationId);
+
             List<Client> clients = clientService.findAll();
             List<Vehicle> vehicles = vehicleService.findAll();
 
             List<Reservation> clientReservations = reservationService.findReservationsByClientId(clientId);
+            clientReservations.removeIf(r -> r.getId() == reservationId);
+
             List<Reservation> vehicleReservations = new ArrayList<>();
             for (Reservation reservation : clientReservations) {
                 if (reservation.getVehicle_id() == vehicleId) {
                     vehicleReservations.add(reservation);
                 }
             }
+            vehicleReservations.removeIf(r -> r.getId() == reservationId);
+
 
             if (!reservationService.isReservationStartDateFormatValid(startDateString)) {
                 request.setAttribute("errorMessageStartDateFormat", "Le format de la date est invalide. Veuillez utiliser le format jj/mm/aaaa.");

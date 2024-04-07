@@ -23,17 +23,34 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 public class VehicleCreateServlet extends HttpServlet {
     @Autowired
     VehicleService vehicleService;
+
+    /**
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
+
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp");
         dispatcher.forward(request, response);
     }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {

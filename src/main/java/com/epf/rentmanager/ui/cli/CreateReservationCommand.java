@@ -26,7 +26,6 @@ public class CreateReservationCommand {
         LocalDate debut = IOUtils.readDate("Date de début (dd/mm/yyyy) : ",true);
         LocalDate fin = IOUtils.readDate("Date de fin (dd/mm/yyyy) : ",true);
 
-        // Créer la réservation
         Reservation nouvelleReservation = new Reservation();
         nouvelleReservation.setClient_id(clientId);
         nouvelleReservation.setVehicle_id(vehicleId);
@@ -43,7 +42,6 @@ public class CreateReservationCommand {
             System.out.println("Réservation créée avec l'ID : " + reservationId+"\n");
         } catch (ServiceException | DaoException e) {
             System.out.println("Erreur lors de la création de la réservation : " + e.getMessage());
-            // e.printStackTrace();
         }
         return 0;
     }

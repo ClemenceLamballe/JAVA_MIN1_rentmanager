@@ -26,12 +26,21 @@ public class ClientDeleteServlet extends HttpServlet {
     private ReservationService reservationService;
 
 
+    /**
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         long clientId = Long.parseLong(request.getParameter("id"));
@@ -41,12 +50,9 @@ public class ClientDeleteServlet extends HttpServlet {
                 reservationService.delete(reservation.getId());
             }
             clientService.delete(clientId);
-            // Rediriger vers une page de confirmation ou une autre page
-            response.sendRedirect(request.getContextPath() + "/clients/list"); // Redirige vers la liste des utilisateurs par exemple
+            response.sendRedirect(request.getContextPath() + "/clients/list");
         } catch (NumberFormatException | ServiceException | DaoException e) {
-            e.printStackTrace();  // Gérer l'exception
-            // Rediriger vers une page d'erreur
-
+            e.printStackTrace();
         }
     }
 }

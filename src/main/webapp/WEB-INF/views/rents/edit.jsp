@@ -6,25 +6,19 @@
 <div class="wrapper">
 
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <!-- Left side column. contains the logo and sidebar -->
     <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
                 Modification de la reservation
             </h1>
         </section>
 
-        <!-- Main content -->
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <!-- Horizontal Form -->
                     <div class="box">
-                        <!-- form start -->
                         <form class="form-horizontal" method="post" >
                             <div class="box-body">
                                 <div class="form-group">
@@ -34,8 +28,8 @@
                                         <select class="form-control" id="vehicle_id" name="vehicle_id">
                                             <c:forEach items="${vehicles}" var="vehicle">
                                                 <c:choose>
-                                                    <c:when test="${vehicle.id eq vehicleresa.id}">
-                                                        <option value="${vehicleresa.id}" selected>${vehicleresa.constructeur} ${vehicleresa.modele}</option>
+                                                    <c:when test="${vehicle.id eq vehicleSelected.id}">
+                                                        <option value="${vehicleSelected.id}" selected>${vehicleSelected.constructeur} ${vehicleSelected.modele}</option>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <option value="${vehicle.id}">${vehicle.constructeur} ${vehicle.modele}</option>
@@ -52,8 +46,8 @@
                                         <select class="form-control" id="client_id" name="client_id">
                                             <c:forEach items="${clients}" var="client">
                                                 <c:choose>
-                                                    <c:when test="${client.id eq clientresa.id}">
-                                                        <option value="${clientresa.id}" selected>${clientresa.nom} ${clientresa.prenom}</option>
+                                                    <c:when test="${client.id eq clientSelected.id}">
+                                                        <option value="${clientSelected.id}" selected>${clientSelected.nom} ${clientSelected.prenom}</option>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <option value="${client.id}">${client.nom} ${client.prenom}</option>
@@ -68,7 +62,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="start_date" name="start_date" required
-                                               data-inputmask="'alias': 'dd/MM/yyyy'" data-mask value="${reservation.debut}">
+                                               data-inputmask="'alias': 'dd/MM/yyyy'" data-mask value="${reservation.getDebut().format(formatter)}">
                                         <c:if test="${not empty requestScope.errorMessageStartDateFormat}">
                                             <div class="text-danger">${requestScope.errorMessageStartDateFormat}</div>
                                         </c:if>
@@ -91,7 +85,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="end_date" name="end_date" required
-                                               data-inputmask="'alias': 'dd/MM/yyyy'" data-mask value="${reservation.fin}">
+                                               data-inputmask="'alias': 'dd/MM/yyyy'" data-mask value="${reservation.getFin().format(formatter)}">
                                         <c:if test="${not empty requestScope.errorMessageEndDateFormat}">
                                             <div class="text-danger">${requestScope.errorMessageEndDateFormat}</div>
                                         </c:if>

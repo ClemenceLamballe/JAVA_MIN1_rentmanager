@@ -2,9 +2,7 @@ package com.epf.rentmanager.service;
 
 import java.util.List;
 
-//import com.epf.rentmanager.Exception.DaoException;
 import com.epf.rentmanager.dao.DaoException;
-//import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.dao.ReservationDao;
 import com.epf.rentmanager.service.ServiceException;
 import com.epf.rentmanager.model.Client;
@@ -24,8 +22,16 @@ public class VehicleService {
 	}
 
 
+	/**
+	 * @param vehicle
+	 * @return
+	 * @throws ServiceException
+	 * @throws DaoException
+	 */
 	public long create(Vehicle vehicle) throws ServiceException, DaoException {
 		try {
+			this.validate(vehicle);
+			/*
 			if (vehicle.getConstructeur().isEmpty()) {
 				throw new ServiceException("Le véhicule doit avoir un constructeur spécifié.");
 			}
@@ -36,7 +42,7 @@ public class VehicleService {
 
 			if (vehicle.getNb_places() < 2 || vehicle.getNb_places() > 9) {
 				throw new ServiceException("Le nombre de places dans le véhicule doit être compris entre 2 et 9.");
-			}
+			}*/
 
 			return vehicleDao.create(vehicle);
 		} catch (DaoException e) {
@@ -44,6 +50,11 @@ public class VehicleService {
 		}
 	}
 
+	/**
+	 * @param vehicleId
+	 * @throws ServiceException
+	 * @throws DaoException
+	 */
 	public void delete(long vehicleId) throws ServiceException, DaoException {
 
 		try {
@@ -53,6 +64,13 @@ public class VehicleService {
 			throw new ServiceException("Erreur dans la suppression de vehicule.",e);
 		}
 	}
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws ServiceException
+	 * @throws DaoException
+	 */
 	public Vehicle findById(long id) throws ServiceException, DaoException {
 		try{
 			return vehicleDao.findById(id);
@@ -62,6 +80,11 @@ public class VehicleService {
 
     }
 
+	/**
+	 * @return
+	 * @throws ServiceException
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findAll() throws ServiceException, DaoException {
 		try{
 			return vehicleDao.findAll();
@@ -72,6 +95,11 @@ public class VehicleService {
 
     }
 
+	/**
+	 * @return
+	 * @throws ServiceException
+	 * @throws DaoException
+	 */
 	public int count() throws ServiceException, DaoException {
 		try {
 			return vehicleDao.count();
@@ -82,8 +110,34 @@ public class VehicleService {
 	}
 
 
+	/**
+	 * @param vehicle
+	 * @throws ServiceException
+	 */
 	public void update(Vehicle vehicle) throws ServiceException {
 		try {
+			this.validate(vehicle);
+			/*
+			if (vehicle.getConstructeur().isEmpty()) {
+				throw new ServiceException("Le véhicule doit avoir un constructeur spécifié.");
+			}
+
+			if (vehicle.getModele().isEmpty()) {
+				throw new ServiceException("Le véhicule doit avoir un modèle spécifié.");
+			}
+
+			if (vehicle.getNb_places() < 2 || vehicle.getNb_places() > 9) {
+				throw new ServiceException("Le nombre de places dans le véhicule doit être compris entre 2 et 9.");
+			}*/
+
+			vehicleDao.update(vehicle);
+		} catch (DaoException e) {
+			throw new ServiceException("Erreur pour mettre à jour un vehicule", e);
+		}
+	}
+
+	public void validate(Vehicle vehicle) throws ServiceException {
+
 			if (vehicle.getConstructeur().isEmpty()) {
 				throw new ServiceException("Le véhicule doit avoir un constructeur spécifié.");
 			}
@@ -96,10 +150,8 @@ public class VehicleService {
 				throw new ServiceException("Le nombre de places dans le véhicule doit être compris entre 2 et 9.");
 			}
 
-			vehicleDao.update(vehicle);
-		} catch (DaoException e) {
-			throw new ServiceException("Erreur pour mettre à jour un vehicule", e);
-		}
+
 	}
-	
-}
+
+
+	}

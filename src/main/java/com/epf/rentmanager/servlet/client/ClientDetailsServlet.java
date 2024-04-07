@@ -30,12 +30,21 @@ public class ClientDetailsServlet extends HttpServlet {
     @Autowired
     VehicleService vehicleService;
 
+    /**
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         long clientId = Long.parseLong(request.getParameter("id"));
@@ -46,9 +55,7 @@ public class ClientDetailsServlet extends HttpServlet {
         Client client = clientService.findById(clientId);
 
         if (client != null) {
-            // Récupérer les réservations du client
             List<Reservation> reservations = reservationService.findReservationsByClientId(clientId);
-            System.out.println("cpt"+ reservations.size());
             List<Vehicle> vehicles = new ArrayList<>();
             List<Vehicle> vehiclesunique = new ArrayList<>();
 
@@ -71,20 +78,10 @@ public class ClientDetailsServlet extends HttpServlet {
                     vehiclesunique.add(vehicle);
                 }
             }
-
-            reservationsCount = reservations.size();
-            vehiclesCount = vehicles.size();
-
-
             request.setAttribute("reservations", reservations);
             request.setAttribute("vehicles", vehicles);
-
             request.setAttribute("client", client);
-
             request.setAttribute("vehiclesunique", vehiclesunique);
-
-
-            // Dispatcher vers la page des détails du client
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/users/details.jsp");
             dispatcher.forward(request, response);
         }
@@ -92,7 +89,7 @@ public class ClientDetailsServlet extends HttpServlet {
 
 
         } catch (NumberFormatException | DaoException | ServiceException e) {
-            e.printStackTrace();  // Gérer l'exception
+            e.printStackTrace();
         }
 
     }

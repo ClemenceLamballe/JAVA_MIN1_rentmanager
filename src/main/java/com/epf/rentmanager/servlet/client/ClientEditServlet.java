@@ -28,6 +28,9 @@ public class ClientEditServlet extends HttpServlet {
     @Autowired
     private ClientService clientService;
 
+    /**
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         super.init();
@@ -35,6 +38,12 @@ public class ClientEditServlet extends HttpServlet {
 
     }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -49,6 +58,12 @@ public class ClientEditServlet extends HttpServlet {
         }
     }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -76,7 +91,7 @@ public class ClientEditServlet extends HttpServlet {
 
             List<Client> clients = clientService.findAll();
             for (Client existingClient : clients) {
-                if (existingClient.getEmail().equals(email)) {
+                if (existingClient.getEmail().equals(email) && existingClient.getId()!= clientId) {
                     request.setAttribute("EmailErrorMessage", "Cette adresse e-mail est déjà utilisée par un autre client.");
                     request.setAttribute("client", client);
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/users/edit.jsp");

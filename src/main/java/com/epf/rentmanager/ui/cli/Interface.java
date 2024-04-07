@@ -24,7 +24,7 @@ public class Interface {
 
             System.out.print("Choix : ");
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:

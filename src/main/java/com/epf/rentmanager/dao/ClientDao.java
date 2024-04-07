@@ -27,7 +27,12 @@ public class  ClientDao {
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
 	private static final String UPDATE_CLIENT_QUERY = "UPDATE Client SET nom=?, prenom=?, email=?, naissance=? WHERE id=?;";
-	
+
+	/**
+	 * @param client
+	 * @return
+	 * @throws DaoException
+	 */
 	public long create(Client client) throws DaoException {
 		try {
 
@@ -57,7 +62,12 @@ public class  ClientDao {
 		}
 		return -1;
 	}
-	
+
+	/**
+	 * @param client
+	 * @return
+	 * @throws DaoException
+	 */
 	public long delete(Client client) throws DaoException {
 
 		try {
@@ -79,6 +89,11 @@ public class  ClientDao {
 		return 0;
 	}
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public Client findById(long id) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -102,10 +117,12 @@ public class  ClientDao {
 			throw new DaoException("Erreur pour trouver un client",e);
 		}
 		return null;
-
-		//return new Client();
 	}
 
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
 	public List<Client> findAll() throws DaoException {
 		List<Client> clients = new ArrayList<>();
 
@@ -134,6 +151,10 @@ public class  ClientDao {
 		return clients;
 	}
 
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
 	public int countClients() throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM client");
@@ -150,6 +171,10 @@ public class  ClientDao {
 		return -1;
 	}
 
+	/**
+	 * @param client
+	 * @throws DaoException
+	 */
 	public void update(Client client) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();

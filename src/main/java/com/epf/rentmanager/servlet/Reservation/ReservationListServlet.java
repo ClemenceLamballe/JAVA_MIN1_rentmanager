@@ -30,12 +30,22 @@ public class ReservationListServlet extends HttpServlet {
     ClientService clientService;
     @Autowired
     VehicleService vehicleService;
+
+    /**
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -57,8 +67,7 @@ public class ReservationListServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/rents/list.jsp");
             dispatcher.forward(request, response);
         } catch (ServiceException | DaoException e) {
-            // Gérer l'exception (par exemple, rediriger vers une page d'erreur)
-            e.printStackTrace(); // Pour l'instant, affichez simplement la trace de la pile.
+            e.printStackTrace();
         }
     }
 }

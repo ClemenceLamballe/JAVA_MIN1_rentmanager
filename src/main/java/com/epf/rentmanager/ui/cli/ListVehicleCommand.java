@@ -27,8 +27,6 @@ public class ListVehicleCommand {
             } else {
                 System.out.println("Liste des véhicules :");
                 for (Vehicle vehicle : vehicles) {
-                    //System.out.println(vehicle.toString());
-                    //System.out.println("OU");
                     System.out.println(vehicle.getId() + ": " + vehicle.getConstructeur() + " " + vehicle.getNb_places()+ " " + vehicle.getModele());
 
                 }

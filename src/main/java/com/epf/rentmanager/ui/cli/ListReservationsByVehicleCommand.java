@@ -1,4 +1,3 @@
-// Nouvelle classe de commande pour lister les réservations associées à un véhicule
 package com.epf.rentmanager.ui.cli;
 
 import com.epf.rentmanager.configurations.AppConfiguration;
