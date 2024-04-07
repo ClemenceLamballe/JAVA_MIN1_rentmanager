@@ -26,9 +26,16 @@ public class VehicleService {
 
 	public long create(Vehicle vehicle) throws ServiceException, DaoException {
 		try {
+			if (vehicle.getConstructeur().isEmpty()) {
+				throw new ServiceException("Le véhicule doit avoir un constructeur spécifié.");
+			}
 
-			if (vehicle.getConstructeur().isEmpty() || vehicle.getModele().isEmpty() || vehicle.getNb_places() < 2 || vehicle.getNb_places() > 9) {
-				throw new ServiceException("Le véhicule doit avoir un modèle et un constructeur, et le nombre de places doit être compris entre 2 et 9.");
+			if (vehicle.getModele().isEmpty()) {
+				throw new ServiceException("Le véhicule doit avoir un modèle spécifié.");
+			}
+
+			if (vehicle.getNb_places() < 2 || vehicle.getNb_places() > 9) {
+				throw new ServiceException("Le nombre de places dans le véhicule doit être compris entre 2 et 9.");
 			}
 
 			return vehicleDao.create(vehicle);
@@ -38,35 +45,60 @@ public class VehicleService {
 	}
 
 	public void delete(long vehicleId) throws ServiceException, DaoException {
-		Vehicle vehicleToDelete = this.findById(vehicleId);
 
 		try {
+			Vehicle vehicleToDelete = this.findById(vehicleId);
 			 vehicleDao.delete(vehicleToDelete );
 		} catch (DaoException e) {
-			throw new ServiceException("Erreur dans la suppression de vehicule ",e);
+			throw new ServiceException("Erreur dans la suppression de vehicule.",e);
 		}
 	}
 	public Vehicle findById(long id) throws ServiceException, DaoException {
+		try{
+			return vehicleDao.findById(id);
+		}catch (DaoException e) {
+			throw new ServiceException("Erreur pour trouver le vehicule.",e);
+		}
 
-        return vehicleDao.findById(id);
     }
 
 	public List<Vehicle> findAll() throws ServiceException, DaoException {
-		// TODO: récupérer tous les clients
+		try{
+			return vehicleDao.findAll();
+		}catch (DaoException e) {
+			throw new ServiceException("Erreur pour trouver tous les vehicules.",e);
+		}
 
-        return vehicleDao.findAll();
+
     }
 
 	public int count() throws ServiceException, DaoException {
-		return vehicleDao.count();
+		try {
+			return vehicleDao.count();
+		}catch (DaoException e) {
+			throw new ServiceException("Erreur pour compter les vehicules.",e);
+		}
+
 	}
 
 
 	public void update(Vehicle vehicle) throws ServiceException {
 		try {
+			if (vehicle.getConstructeur().isEmpty()) {
+				throw new ServiceException("Le véhicule doit avoir un constructeur spécifié.");
+			}
+
+			if (vehicle.getModele().isEmpty()) {
+				throw new ServiceException("Le véhicule doit avoir un modèle spécifié.");
+			}
+
+			if (vehicle.getNb_places() < 2 || vehicle.getNb_places() > 9) {
+				throw new ServiceException("Le nombre de places dans le véhicule doit être compris entre 2 et 9.");
+			}
+
 			vehicleDao.update(vehicle);
 		} catch (DaoException e) {
-			throw new ServiceException("Error updating vehicle", e);
+			throw new ServiceException("Erreur pour mettre à jour un vehicule", e);
 		}
 	}
 	

@@ -20,6 +20,7 @@ public class ReservationService {
 
     public long create(Reservation reservation) throws ServiceException, DaoException {
         List<Reservation> allReservations = reservationDao.findAll();
+        System.out.println("all:"+allReservations.size());
 
         LocalDate startDate = reservation.getDebut();
         LocalDate endDate = reservation.getFin();
@@ -35,9 +36,12 @@ public class ReservationService {
         }
         List<Reservation> allReservationsvehhicle = reservationDao.findResaByVehicleId(vehicleId);
 
+        boolean test =  reservationDao.isReservationAvailable(startDate, endDate, vehicleId,allReservations);
+        System.out.println("test"+test+"avec"+startDate+" "+endDate+" "+vehicleId+" "+allReservations.size());
 
-        if (!reservationDao.isReservationAvailable(startDate, endDate, vehicleId,allReservations)) {
-            throw new ServiceException("Cette voiture est déjà réservée pour cette période.");
+        if (!this.isReservationAvailable(startDate, endDate, vehicleId,allReservations)) {
+            System.out.println("pas available avec"+allReservations.size());
+            throw new ServiceException("Cette voiture est déjà réservée pour cette périodeeeeeeeee.");
         }
 
         if (!reservationDao.isReservationDurationValid(startDate, endDate, vehicleReservations)) {
@@ -126,7 +130,7 @@ public class ReservationService {
 
 
             if (!reservationDao.isReservationAvailable(startDate, endDate, vehicleId,allReservations)) {
-                throw new ServiceException("Cette voiture est déjà réservée pour cette période.");
+                throw new ServiceException("Cette voiture est déjà réservée pour cette période. vous ne pouvez pas la modifier ainsi");
             }
 
             if (!reservationDao.isReservationDurationValid(startDate, endDate, vehicleReservations)) {
@@ -160,27 +164,59 @@ public class ReservationService {
         }
     }
 
-    public boolean isReservationAvailable(LocalDate startDate, LocalDate endDate, Long vehicleId, List<Reservation> allReservations) throws DaoException {
-        return reservationDao.isReservationAvailable(startDate, endDate, vehicleId,allReservations);
+    public boolean isReservationAvailable(LocalDate startDate, LocalDate endDate, Long vehicleId, List<Reservation> allReservations) throws DaoException, ServiceException {
+
+        try{
+            System.out.println("hello?");
+            return reservationDao.isReservationAvailable(startDate,endDate,vehicleId,allReservations);
+        }catch (DaoException e) {
+            throw new ServiceException("Erreur pour trouver valider la disponibilité de la réservation dans le Service");
+        }
     }
 
-    public boolean isReservationDurationValid(LocalDate startDate, LocalDate endDate, List<Reservation> vehicleReservations) throws DaoException {
-        return reservationDao.isReservationDurationValid(startDate, endDate, vehicleReservations);
+    public boolean isReservationDurationValid(LocalDate startDate, LocalDate endDate, List<Reservation> vehicleReservations) throws DaoException, ServiceException {
+        try{
+            return reservationDao.isReservationDurationValid(startDate, endDate, vehicleReservations);
+
+        }catch (DaoException e) {
+            throw new ServiceException("Erreur pour trouver valider la durée de la réservation dans le Service");
+        }
     }
 
-    public boolean isReservationDurationVehicleValid(LocalDate startDate, LocalDate endDate, List<Reservation> Reservations) throws DaoException {
-        return reservationDao.isReservationDurationVehicleValid(startDate, endDate, Reservations);
+    public boolean isReservationDurationVehicleValid(LocalDate startDate, LocalDate endDate, List<Reservation> Reservations) throws DaoException, ServiceException {
+        try{
+            return reservationDao.isReservationDurationVehicleValid(startDate, endDate, Reservations);
+        }catch (DaoException e) {
+            throw new ServiceException("Erreur pour trouver valider la durée de la réservation pour le vehicule dans le Service");
+        }
     }
 
-    public boolean isReservationDateValid (LocalDate startDate, LocalDate endDate){
-        return reservationDao.isReservationDateValid(startDate, endDate);
+    public boolean isReservationDateValid (LocalDate startDate, LocalDate endDate) throws ServiceException {
+        try{
+            System.out.println("dans service");
+            boolean isValid = reservationDao.isReservationDateValid(startDate, endDate);
+            System.out.println("dans service"+isValid);
+
+            return isValid;
+        }catch (DaoException e) {
+            throw new ServiceException("Erreur pour trouver valider les dates de la réservation dans le Service");
+        }
+
     }
 
-    public boolean isReservationStartDateFormatValid (String StartDate){
-        return reservationDao.isReservationStartDateFormatValid(StartDate);
+    public boolean isReservationStartDateFormatValid (String StartDate) throws ServiceException {
+        try {
+            return reservationDao.isReservationStartDateFormatValid(StartDate);
+        }catch (DaoException e) {
+            throw new ServiceException("Erreur pour trouver valider le format de date de début de la réservation dans le Service");
+        }
     }
 
-    public boolean isReservationEndDateFormatValid (String EndDate){
-        return reservationDao.isReservationEndDateFormatValid(EndDate);
+    public boolean isReservationEndDateFormatValid (String EndDate) throws ServiceException {
+        try{
+            return reservationDao.isReservationEndDateFormatValid(EndDate);
+        }catch (DaoException e) {
+            throw new ServiceException("Erreur pour trouver valider le format de date de fin de la réservation dans le Service");
+        }
     }
 }

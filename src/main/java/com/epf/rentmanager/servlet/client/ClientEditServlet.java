@@ -31,7 +31,6 @@ public class ClientEditServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        System.out.println("debut");
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 
     }
@@ -93,7 +92,6 @@ public class ClientEditServlet extends HttpServlet {
 
             if ( lastName.length() < 3) {
                 request.setAttribute("LastNameErrorMessage", "Le nom et le prénom doivent contenir au moins 3 caractères.");
-
             }
 
             LocalDate now = LocalDate.now();

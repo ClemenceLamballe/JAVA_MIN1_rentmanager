@@ -1,5 +1,6 @@
 package com.epf.rentmanager.dao;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -233,13 +234,20 @@ public class ReservationDao {
 	}
 
 	public boolean isReservationAvailable(LocalDate startDate, LocalDate endDate, Long vehicleId,List<Reservation> allReservations ) throws DaoException {
-		for (Reservation existingReservation : allReservations) {
-			if (existingReservation.getVehicle_id() == vehicleId
-					&& (!existingReservation.getDebut().isAfter(endDate) && !existingReservation.getFin().isBefore(startDate))) {
-				return false;
+		try {
+
+			for (Reservation existingReservation : allReservations) {
+				if (existingReservation.getVehicle_id() == vehicleId
+						&& (!existingReservation.getDebut().isAfter(endDate) && !existingReservation.getFin().isBefore(startDate))) {
+					return false;
+				}
 			}
-		}
-		return true;
+			return true;
+		}catch (Exception e){
+			throw new DaoException("Erreur pour vérifier la validité de la réservation",e);
+        }
+
+
 	}
 
 
@@ -283,16 +291,20 @@ public class ReservationDao {
 		return totalDays <= 30;
 	}
 
-	public boolean isReservationDateValid (LocalDate StartDate, LocalDate EndDate){
-		if(EndDate.isAfter(StartDate)){
-			System.out.println("fin apres");
-			return true;
+	public boolean isReservationDateValid (LocalDate StartDate, LocalDate EndDate) throws DaoException {
+		try {
+			System.out.println("hello dao");//rien ne s'affiche
+			if(EndDate.isAfter(StartDate)){
+				return true;
+			}
+			return false;
+		}catch (Exception e) {
+			throw new DaoException("Erreur lors de la validation des dates de réservation dans le DAO", e);
 		}
-		System.out.println("fin avant!!");
-		return false;
+
 	}
 
-	public boolean isReservationStartDateFormatValid (String StartDate){
+	public boolean isReservationStartDateFormatValid (String StartDate) throws DaoException {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		try {
@@ -300,10 +312,12 @@ public class ReservationDao {
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
+		}catch (Exception e) {
+			throw new DaoException("Erreur lors de la validation du format de la date de début de réservation dans le DAO", e);
 		}
 	}
 
-	public boolean isReservationEndDateFormatValid ( String EndDate){
+	public boolean isReservationEndDateFormatValid ( String EndDate) throws DaoException {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		try {
@@ -311,6 +325,8 @@ public class ReservationDao {
 			return true;
 		} catch (DateTimeParseException e) {
 			return false;
+		}catch (Exception e) {
+			throw new DaoException("Erreur lors de la validation du format de la date de fin de réservation dans le DAO", e);
 		}
 	}
 
